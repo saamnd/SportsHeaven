@@ -9,8 +9,8 @@
  </head>
 <body>
     <form class="card-body">
-        <h3>Registrarse ahora</h3>
-        <h6>Por favor regístrate para entrar a la aplicación</h6>
+        <h2>Registrarse ahora</h2>
+        <p>Por favor regístrate para entrar a la aplicación</p>
         <div class="mb-3 mt-3">
           <label  class="form-label">Correo electrónico</label>
           <input type="email" class="form-control" placeholder="Ingrese su correo electrónico">
@@ -20,6 +20,10 @@
             <input type="text" class="form-control" placeholder="Ingrese su nombre completo">
           </div>
         <div class="mb-3">
+            <label class="form-label">Fecha de nacimiento</label>
+            <input type="date" class="form-control">
+        </div>
+        <div class="mb-3">
           <label class="form-label">Contraseña</label>
           <input type="password" class="form-control" >
           <div class="form-text">La contraseña debe tener mínimo 8 caractéres</div>
@@ -28,11 +32,15 @@
             <label class="form-label">Confirmar contraseña</label>
             <input type="password" class="form-control">
           </div>
+         <div class="mb-3">
+            <label for="formFile" class="form-label">Subir foto de perfil</label>
+            <input class="form-control" type="file">
+        </div>
         <div class="mb-3 form-check">
           <input type="checkbox" class="form-check-input">
           <label class="form-check-label">He leído y acepto lo términos y condiciones</label>
         </div>
-        <button type="submit" class="btn btn-primary">Regístrate</button>
+        <div class="d-grid gap-2 col-6 mx-auto"><button type="submit" class="btn btn-dark ">Regístrate</button></div>
       </form>
 </body>
 </html>
