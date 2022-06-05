@@ -22,7 +22,7 @@ app.use(session({
 }))
 
 
-app.get('/ej1', (req, res) => {
+app.get('/', (req, res) => {
     const textoRespuesta = "sam"
     res.send(textoRespuesta)  
   })
