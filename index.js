@@ -6,8 +6,6 @@ const db = require('./dao/models')
 //const usuario = require('./dao/models/usuario')
 const app = express()
 
-
-
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
     extended:true
