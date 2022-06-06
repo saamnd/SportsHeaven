@@ -22,9 +22,12 @@ app.use(session({
 }))
 
 
-app.get('/sam', (req, res) => {
-    const textoRespuesta = "sam"
-    res.send(textoRespuesta)  
+app.get('/', (req, res) => {
+    res.render('inicio')
+  })
+
+app.get('/registro', (req, res) => {
+    res.render('registro')
   })
 
 
