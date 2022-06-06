@@ -2,7 +2,7 @@ const  express=require('express')
 const PORT = process.env.PORT || 8080
 const bodyParser = require('body-parser')
 const session = require('express-session')
-//const db = require('./dao/models')
+const db = require('./dao/models')
 //const usuario = require('./dao/models/usuario')
 const app = express()
 
