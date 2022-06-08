@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sports Heaven</title>
+        <meta charset="utf-8" />
+        <link rel="shortcut icon" href="/imagenes/logo.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    </head>
+    <body class="">
+        <%- include('header') %>
+
+    <div method="post" class="container">
+        <div>
+            <center><h1>Eventos</h1></center>
+            <div class="mb-3 mt-3">
+                <nav class="navbar bg-light">
+                    <div class="container-fluid">
+                      <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Buscar</button>
+                      </form>
+                      <button class="btn btn-dark" type="submit">Crear Evento</button>
+                    </div>
+                  </nav>
+            </div>
+        </div>
+        <div class="mb-3 mt-3">
+            <div class="card" style="width: 18rem;">
+                <img src="/icons/pichanga.png" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Nombre</h5>
+                  <p class="card-text">Fecha</p>
+                  <p class="card-text">Hora</p>
+                  <p class="card-text">Ubicacion</p>
+                  <p class="card-text">Descripcion</p>
+                  <a href="#" class="btn btn-dark">Unirse</a>
+                </div>
+            </div>
+            <div class="card" style="width: 18rem;">
+                <img src="/icons/voley.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Nombre</h5>
+                  <p class="card-text">Fecha</p>
+                  <p class="card-text">Hora</p>
+                  <p class="card-text">Ubicacion</p>
+                  <p class="card-text">Descripcion</p>
+                  <a href="#" class="btn btn-dark">Unirse</a>
+                </div>
+            </div>
+            <div class="card" style="width: 18rem;">
+                <img src="/icons/pingpong.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Nombre</h5>
+                  <p class="card-text">Fecha</p>
+                  <p class="card-text">Hora</p>
+                  <p class="card-text">Ubicacion</p>
+                  <p class="card-text">Descripcion</p>
+                  <a href="#" class="btn btn-dark">Unirse</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+        <%- include('footer')%>
+    </body>
+</html>

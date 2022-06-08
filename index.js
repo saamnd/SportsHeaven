@@ -78,6 +78,10 @@ app.get('/logout', (req, res) => {
     console.log("Se cerró la sesión")
 })
 
+app.get('/listadoEventos', (req, res) => {
+    res.render('listadoEventos')
+  })
+
 app.listen(PORT,()=>{
     console.log(`El servidor se inicio en el puerto: ${PORT}`)
 })
