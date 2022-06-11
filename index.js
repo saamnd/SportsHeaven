@@ -82,6 +82,55 @@ app.get('/listadoEventos', (req, res) => {
     res.render('listadoEventos')
   })
 
+
+app.post('/cursos/new', async (req, res)=>{
+    const nnombre = req.body.nuevonombre
+    const ndeporte = req.body.nuevodeporte
+    const ndescripcion = req.body.nuevodescripción
+    const nprecio = req.body.nuevoprecio
+    const ncalificacion = req.body.nuevocalificacion
+    const nprofesor = req.body.nuevoprofesor
+    
+    await db.Curso.create({
+        nombre: nnombre, //los primeros son como estan en models> curso.js
+    	deporte: ndeporte,
+        descripcion: ndescripcion,
+        precio: nprecio,
+        calificacion: ncalificacion,
+        profesor: nprofesor
+    })
+    res.redirect('/cursos')
+})
+
+app.post('/cursos/modificar', async(req,res)=>{
+    const id = req.body.curso_id
+    const nnombre = req.body.nuevonombre
+    const ndeporte = req.body.nuevodeporte
+    const ndescripcion = req.body.nuevodescripcion
+    const nprecio = req.body.nuevoprecio
+    const nprofesor = req.body.nuevoprofesor
+    
+
+    //Obtener un curso de la bd con id: idCurso
+    const curso = await db.Curso.findOne({
+        where: {
+            id: idCurso
+        }
+    })
+
+    //Cambiar sus propiedades/ campos
+    curso.nombre = nnombre
+    curso.deporte = ndeporte,
+    curso.descripcion = ndescripcion,
+    curso.precio = nprecio,
+    curso.profesor = nprofesor
+    
+    // Guardo/Actualizo en la bd
+    await curso.save()
+    
+    res.redirect('/cursos')
+})
+
 app.listen(PORT,()=>{
     console.log(`El servidor se inicio en el puerto: ${PORT}`)
 })
