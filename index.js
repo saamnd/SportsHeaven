@@ -131,6 +131,20 @@ app.post('/cursos/modificar', async(req,res)=>{
     res.redirect('/cursos')
 })
 
+app.get('/curso/eliminar/:id', async (req, res) => {
+    const idCurso = req.params.id
+    await db.Curso.destroy({
+        where : {
+            id : idCurso
+        }
+    })
+    res.redirect('/listacurso')
+})
+
+app.get('/listacurso', (req, res) => {
+    res.render('listacurso')
+})
+
 app.listen(PORT,()=>{
     console.log(`El servidor se inicio en el puerto: ${PORT}`)
 })
