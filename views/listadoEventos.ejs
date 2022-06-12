@@ -15,16 +15,8 @@
       <div>
           <center><h1>Eventos</h1></center>
           <div class="mb-3 mt-3">
-              <nav class="navbar bg-light">
-                  <div class="container-fluid">
-                    <form class="d-flex" role="search">
-                      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                      <button class="btn btn-outline-success" type="submit">Buscar</button>
-                    </form>
-                    <button class="btn btn-dark" type="submit">Crear Evento</button>
-                  </div>
-                </nav>
-        </div>
+                <button class="btn btn-dark" type="submit">Crear Evento</button>
+          </div>
         <div class="row mb-3 mt-3">
           <tbody>
             <% eventos.forEach( (evento) => { %>
@@ -41,8 +33,8 @@
               </div>
             <% }) %>
           </tbody>
-            </div>
         </div>
+      </div>
     </div>
     
         <%- include('footer')%>
