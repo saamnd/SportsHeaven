@@ -78,7 +78,7 @@ app.get('/logout', (req, res) => {
     console.log("Se cerró la sesión")
 })
 
-app.get('/listadoEventos', (req, res) => {
+app.get('/listadoEventos', async(req, res) => {
     const timestampActual = new Date().getTime();
     const dif = timestampActual - req.session.lastLogin
 
