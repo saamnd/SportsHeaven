@@ -111,13 +111,13 @@ app.get('/listadoEventos', async(req, res) => {
         
 })
 
-app.post('/cursos/new', async (req, res)=>{
-    const nnombre = req.body.nuevonombre
-    const ndeporte = req.body.nuevodeporte
-    const ndescripcion = req.body.nuevodescripción
-    const nprecio = req.body.nuevoprecio
-    const ncalificacion = req.body.nuevocalificacion
-    const nprofesor = req.body.nuevoprofesor
+app.post('/cursos', async (req, res)=>{
+    const nnombre = req.body.nombre
+    const ndeporte = req.body.deporte
+    const ndescripcion = req.body.descripcion
+    const nprecio = req.body.precio
+    const ncalificacion = req.body.calificacion
+    const nprofesor = req.body.profesor
     
     await db.Curso.create({
         nombre: nnombre, //los primeros son como estan en models> curso.js
@@ -127,7 +127,7 @@ app.post('/cursos/new', async (req, res)=>{
         calificacion: ncalificacion,
         profesor: nprofesor
     })
-    res.redirect('/cursos')
+    res.redirect('/listacurso')
 })
 
 app.post('/cursos/modificar', async(req,res)=>{
