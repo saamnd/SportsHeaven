@@ -12,25 +12,21 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       UsuarioEvento.belongsTo(models.Usuario, {
-        foreignKey : {
-          name : 'id_usuario'
-        }
+        foreignKey : 'id_usuario'
       })
 
       UsuarioEvento.belongsTo(models.Evento, {
-        foreignKey : {
-          name : 'id_evento'
-        }
+        foreignKey : 'id_evento'
       })
     }
-  };
+  }
   UsuarioEvento.init({
     id_usuario: DataTypes.INTEGER,
     id_evento: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'UsuarioEvento',
-    freezeTableName : true
+    freezeTableName: true
   });
   return UsuarioEvento;
 };

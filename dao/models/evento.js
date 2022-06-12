@@ -12,10 +12,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Evento.belongsTo(models.Usuario, {
-          foreignKey : 'id_usuario'
+        foreignKey : 'id_usuario'
       })
     }
-  };
+  }
   Evento.init({
     nombre: DataTypes.STRING,
     ubicacion: DataTypes.STRING,
