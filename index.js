@@ -79,9 +79,37 @@ app.get('/logout', (req, res) => {
 })
 
 app.get('/listadoEventos', (req, res) => {
-    res.render('listadoEventos')
-  })
+    const timestampActual = new Date().getTime();
+    const dif = timestampActual - req.session.lastLogin
 
+    if (dif >= 3 * 60 * 60 * 1000) {
+        req.session.destroy() // Destruyes la sesion
+        res.render('/inicio')
+    }else {
+        // Obtener torneos de la base de datos
+        const eventos = await db.Evento.findAll({
+            order : [
+                ['id', 'DESC']
+            ]
+        });
+        
+        let nuevaListaEventos = []
+        for (let evento of eventos) {
+            nuevaListaEventos.push({
+                nombre : evento.nombre,
+                fecha : evento.fecha,
+                hora : evento.hora,
+                ubicacion : evento.ubicacion,
+                descripcion : evento.descripcion
+            })
+        }
+
+        res.render('listadoEventos', {
+            eventos : nuevaListaEventos
+        })
+    }
+        
+})
 
 app.post('/cursos/new', async (req, res)=>{
     const nnombre = req.body.nuevonombre
@@ -143,6 +171,10 @@ app.get('/curso/eliminar/:id', async (req, res) => {
 
 app.get('/listacurso', (req, res) => {
     res.render('listacurso')
+})
+
+app.get('/inicio', (req, res) => {
+    res.render('inicio')
 })
 
 app.listen(PORT,()=>{
