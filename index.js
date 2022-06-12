@@ -82,6 +82,10 @@ app.get('/listadoEventos', (req, res) => {
     res.render('listadoEventos')
   })
 
+app.get('/cursos', (req, res) => {
+    res.render('crearcursos')
+  })
+
 
 app.post('/cursos/new', async (req, res)=>{
     const nnombre = req.body.nuevonombre
