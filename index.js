@@ -24,9 +24,37 @@ app.get('/', (req, res) => {
     res.render('inicio')
   })
 
-app.get('/registro', (req, res) => {
+app.get('/registro', async (req, res) => {
     res.render('registro')
   })
+
+app.post('/registro', async (req, res)=>{
+    const erol = req.body.nrol
+    const ecorreo = req.body.ncorreo
+    const enombre = req.body.nnombre
+    const eapellido = req.body.napellido
+    const efecha = req.body.nfecha 
+    const econtra = req.body.ncontra
+    const econtra2 = req.body.ncontra2
+    const fechann = efecha.slice(0,4)
+
+    if (await db.Usuario.findOne({
+        where: {correo: ecorreo}}) != undefined) {
+            res.render('error')
+    }else{
+        await db.Usuario.create({
+            rol: erol,
+            nombre: enombre,
+            apellido: eapellido,
+            correo: ecorreo,
+            contra: econtra,
+            fecha: efecha
+        })
+        res.redirect('/')
+    }
+    
+})
+
 
 app.get('/login', (req,res) => {
     if(req.session.rol != undefined){
