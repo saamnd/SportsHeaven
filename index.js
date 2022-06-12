@@ -192,11 +192,11 @@ app.get('/cursos', (req, res) => {
   })
 
 
-app.get('/curso/eliminar/:id', async (req, res) => {
-    const idCurso = req.params.id
+app.get('/listacurso/eliminar/:id', async (req, res) => {
+    const curso = req.params.id
     await db.Curso.destroy({
         where : {
-            id : idCurso
+            id : curso
         }
     })
     res.redirect('/listacurso')
