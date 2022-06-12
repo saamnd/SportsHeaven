@@ -202,8 +202,16 @@ app.get('/curso/eliminar/:id', async (req, res) => {
     res.redirect('/listacurso')
 })
 
-app.get('/listacurso', (req, res) => {
-    res.render('listacurso')
+app.get('/listacurso', async (req, res) => {
+    const cursos = await db.Curso.findAll({
+        order : [
+            ['id', 'ASC']
+        ]
+    });
+
+    res.render('listacurso', {
+        cursos : cursos
+    })
 })
 
 app.get('/inicio', (req, res) => {
