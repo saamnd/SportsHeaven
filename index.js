@@ -159,6 +159,11 @@ app.post('/cursos/modificar', async(req,res)=>{
     res.redirect('/cursos')
 })
 
+app.get('/cursos', (req, res) => {
+    res.render('crearcursos')
+  })
+
+
 app.get('/curso/eliminar/:id', async (req, res) => {
     const idCurso = req.params.id
     await db.Curso.destroy({
