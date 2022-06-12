@@ -8,26 +8,24 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-    </head>
-    <body class="">
-        <%- include('header')  %>
-
+    </head>    
     <body class="container">
+        <%- include('header')  %>
         <h2>Editar Evento</h2>
         <form method="post" action="/evento/modificar">
         <input type="hidden" name="evento_id" value="<%= evento.id %>" /> 
 
             <div>
                 <label class="form-label">Nombre del evento:</label>
-                <input name="evento_fecha" type="datetime" class="form-control" value="<%= evento.nombre %>"/>
+                <input name="evento_fecha" type="text" class="form-control" value="<%= evento.nombre %>"/>
             </div>
             <div>
                 <label class="form-label">Fecha del evento:</label>
-                <input name="evento_duracion" type="number" class="form-control" value="<%= evento.fecha %>"/>
+                <input name="evento_duracion" type="datetime" class="form-control" value="<%= evento.fecha %>"/>
             </div>
             <div>
                 <label class="form-label">Hora del evento:</label>
-                <input name="evento_hora" type="text" class="form-control" value="<%= evento.hora %>"/>
+                <input name="evento_hora" type="number" class="form-control" value="<%= evento.hora %>"/>
             </div>
             <div>
                 <label class="form-label">Ubicación del evento:</label>
