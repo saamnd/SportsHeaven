@@ -214,6 +214,29 @@ app.get('/listacurso', async (req, res) => {
     })
 })
 
+app.get('/evento/new', (req, res) => {
+    res.render('crearEvento')
+})
+
+app.post('/evento/new', async (req, res) => {
+    const eventoNombre = req.body.nombre
+    const eventoFecha = req.body.fecha
+    const eventoHora = req.body.hora
+    const eventoUbicacion = req.body.ubicacion
+    const eventoDescripcion = req.body.descripcion
+
+    await db.Evento.create({
+        nombre : eventoNombre,
+        fecha : eventoFecha,
+        hora : eventoHora,
+        ubicacion : eventoUbicacion,
+        descripcion : eventoDescripcion,
+    })
+
+    res.redirect('/listadoEventos')
+})
+
+
 app.get('/inicio', (req, res) => {
     res.render('inicio')
 })
