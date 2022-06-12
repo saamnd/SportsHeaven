@@ -184,7 +184,7 @@ app.post('/cursos/modificar', async(req,res)=>{
     // Guardo/Actualizo en la bd
     await curso.save()
     
-    res.redirect('/cursos')
+    res.redirect('/listacurso')
 })
 
 app.get('/cursos', (req, res) => {
