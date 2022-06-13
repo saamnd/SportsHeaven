@@ -160,11 +160,11 @@ app.post('/cursos', async (req, res)=>{
 
 app.post('/modificar', async(req,res)=>{
     const id = req.body.curso_id
-    const nnombre = req.body.nuevonombre
-    const ndeporte = req.body.nuevodeporte
-    const ndescripcion = req.body.nuevodescripcion
-    const nprecio = req.body.nuevoprecio
-    const nprofesor = req.body.nuevoprofesor
+    const nnombre = req.body.nombre
+    const ndeporte = req.body.deporte
+    const ndescripcion = req.body.descripcion
+    const nprecio = req.body.precio
+    const nprofesor = req.body.profesor
     
 
     //Obtener un curso de la bd con id: idCurso
@@ -175,7 +175,7 @@ app.post('/modificar', async(req,res)=>{
     })
 
     //Cambiar sus propiedades/ campos
-    curso.nombre = nnombre
+    curso.nombre = nnombre,
     curso.deporte = ndeporte,
     curso.descripcion = ndescripcion,
     curso.precio = nprecio,
@@ -198,10 +198,6 @@ app.get('/modificar', async (req, res) => {
         cursos : cursos
     })
 })
-
-app.get('/modificar', (req, res) => {
-    res.render('modificarcursos')
-  })
 
 app.get('/cursos', (req, res) => {
     res.render('crearcursos')
