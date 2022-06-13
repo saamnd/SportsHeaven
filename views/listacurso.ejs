@@ -17,42 +17,40 @@
           <div class="mb-3 mt-3">
               <nav class="navbar bg-light">
                   <div class="container-fluid">
-                    <form class="d-flex" role="search">
-                      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                      <button class="btn btn-outline-success" type="submit">Buscar</button>
-                    </form>
-                    <button class="btn btn-dark" type="submit">Crear curso</button>
+                    <a class="btn btn-success" href="cursos">Crear curso</a>
                   </div>
                 </nav>
         </div>
-        <div class="row mb-3 mt-3">
-              <div class="card ms-5 mb-3" style="width: 18rem;">
-                  <img src="/icons/voley.jpg" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">Nombre</h5>
-                    <p class="card-text">Deporte</p>
-                    <p class="card-text">Descripcion</p>
-                    <p class="card-text">Precio</p>
-                    <p class="card-text">Calificacion</p>
-                    <p class="card-text">id_profesor</p>
-                    <a href="#" class="btn btn-dark">Unirse</a>
-                  </div>
-              </div>
-              <div class="card ms-5 mb-3" style="width: 18rem;">
-                  <img src="/icons/pingpong.jpg" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">Nombre</h5>
-                    <p class="card-text">Deporte</p>
-                    <p class="card-text">Descripcion</p>
-                    <p class="card-text">Precio</p>
-                    <p class="card-text">Calificacion</p>
-                    <p class="card-text">id_profesor</p>
-                    <a href="#" class="btn btn-dark">Unirse</a>
-                  </div>
-              </div>
-            </div>
-            </div>
-        </div>
+        <table class="table table-hover">
+          <thead>
+              <tr>
+                  <th>Id</th>
+                  <th>Nombre</th>
+                  <th>Deporte</th>
+                  <th>Descripcion</th>
+                  <th>Precio</th>
+                  <th>Calificacion</th>
+                  <th>Acciones</th>
+
+              </tr>
+          </thead>
+          <tbody>
+              <% cursos.forEach( (curso) => { %>
+                  <tr>
+                      <td><%= curso.id %></td>
+                      <td><%= curso.nombre %></td>
+                      <td><%= curso.deporte%></td>
+                      <td><%= curso.descripcion%></td>
+                      <td><%= curso.precio%></td>
+                      <td><%= curso.calificacion%></td>
+                      <td>
+                          <a class="btn btn-success" href="/modificarcursos">Modificar curso</a>
+                          <a class="btn btn-success" href="/listacurso/eliminar/<%= curso.id %>">Eliminar curso</a>
+                      </td>
+                  </tr>
+              <% }) %>
+          </tbody>
+      </table>
     </div>
     
         <%- include('footer')%>

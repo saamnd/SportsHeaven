@@ -192,24 +192,50 @@ app.get('/cursos', (req, res) => {
   })
 
 
-  app.get('/modificarcurso', (req, res) => {
-    res.render('modificarcursos')
-  })
-
-
-app.get('/curso/eliminar/:id', async (req, res) => {
-    const idCurso = req.params.id
+app.get('/listacurso/eliminar/:id', async (req, res) => {
+    const curso = req.params.id
     await db.Curso.destroy({
         where : {
-            id : idCurso
+            id : curso
         }
     })
     res.redirect('/listacurso')
 })
 
-app.get('/listacurso', (req, res) => {
-    res.render('listacurso')
+app.get('/listacurso', async (req, res) => {
+    const cursos = await db.Curso.findAll({
+        order : [
+            ['id', 'ASC']
+        ]
+    });
+
+    res.render('listacurso', {
+        cursos : cursos
+    })
 })
+
+app.get('/evento/new', (req, res) => {
+    res.render('crearEvento')
+})
+
+app.post('/evento/new', async (req, res) => {
+    const eventoNombre = req.body.nombre
+    const eventoFecha = req.body.fecha
+    const eventoHora = req.body.hora
+    const eventoUbicacion = req.body.ubicacion
+    const eventoDescripcion = req.body.descripcion
+
+    await db.Evento.create({
+        nombre : eventoNombre,
+        fecha : eventoFecha,
+        hora : eventoHora,
+        ubicacion : eventoUbicacion,
+        descripcion : eventoDescripcion,
+    })
+
+    res.redirect('/listadoEventos')
+})
+
 
 app.get('/inicio', (req, res) => {
     res.render('inicio')
