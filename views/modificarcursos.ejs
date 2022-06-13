@@ -11,25 +11,25 @@
         <%- include('header') %>
         <h2>Modificar Curso</h2>
         <form method="post" action="/cursos/modificar">
-        <input type="hidden" name="cursos_id" value="<%= cursos.id %>" /> 
+        
             <div class="mb-2">   
                 <label class="form-label">Curso:</label>
             </div>
             <div>
                 <label class="form-label">Nombre:</label>
-                <input name="partida_duracion" type="number" class="form-control" value="<%= cursos.nombre %>"/>
+                <input name="nombre" type="text" class="form-control" value="<%= curso.nombre %>"/>
             </div>
             <div>
                 <label class="form-label">Deporte:</label>
-                <input name="partida_equipoA" type="text" class="form-control" value="<%= cursos.deporte %>"/>
+                <input name="deporte" type="text" class="form-control" value="<%= curso.deporte %>"/>
             </div>
             <div>
                 <label class="form-label">Precio:</label>
-                <input name="partida_equipoB" type="text" class="form-control" value="<%= cursos.precio %>"/>
+                <input name="precio" type="text" class="form-control" value="<%= curso.precio %>"/>
             </div>
             <div>
                 <label class="form-label">Descripción:</label>
-                <input name="partida_factorA" type="text" class="form-control" value="<%= cursos.descripcion %>"/>
+                <input name="descripcion" type="text" class="form-control" value="<%= curso.descripcion %>"/>
             </div>
         
             <button type="submit" class="btn btn-success">Guardar</button>

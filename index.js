@@ -192,6 +192,11 @@ app.get('/cursos', (req, res) => {
   })
 
 
+  app.get('/modificarcurso', (req, res) => {
+    res.render('modificarcursos')
+  })
+
+
 app.get('/curso/eliminar/:id', async (req, res) => {
     const idCurso = req.params.id
     await db.Curso.destroy({
