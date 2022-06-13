@@ -158,45 +158,38 @@ app.post('/cursos', async (req, res)=>{
     res.redirect('/listacurso')
 })
 
-app.post('/modificar', async(req,res)=>{
-    const id = req.body.curso_id
-    const nnombre = req.body.nombre
-    const ndeporte = req.body.deporte
-    const ndescripcion = req.body.descripcion
-    const nprecio = req.body.precio
-    const nprofesor = req.body.profesor
-    
+app.get('/listacurso/modificarcursos/:id', async (req, res) => {
+    const idCurso = req.params.id
 
-    //Obtener un curso de la bd con id: idCurso
     const curso = await db.Curso.findOne({
-        where: {
-            id: idCurso
+        where : {
+            id : idCurso
         }
     })
 
-    //Cambiar sus propiedades/ campos
-    curso.nombre = nnombre,
-    curso.deporte = ndeporte,
-    curso.descripcion = ndescripcion,
-    curso.precio = nprecio,
-    curso.profesor = nprofesor
-    
-    // Guardo/Actualizo en la bd
-    await curso.save()
-    
-    res.redirect('/listacurso')
+    res.render('modificarcursos', {
+        curso : curso,
+    })
 })
 
-app.get('/modificar', async (req, res) => {
-    const cursos = await db.Curso.findAll({
-        order : [
-            ['id', 'ASC']
-        ]
-    });
+app.post('/listacurso/modificarcursos', async (req, res) => {
+    const idCurso = req.body.curso_id
+    const nombre = req.body.curso_nombre
+    const deporte = req.body.curso_deporte
 
-    res.render('modificarcursos', {
-        cursos : cursos
+    const curso = await db.Curso.findOne({
+        where : {
+            id : idCurso
+        }
     })
+    curso.nombre = nombre
+    curso.deporte = deporte
+
+
+    await curso.save()
+
+    res.redirect('/listacurso')
+
 })
 
 app.get('/cursos', (req, res) => {

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sports Heaven</title>
+        <meta charset="utf-8" />
+        <link rel="shortcut icon" href="/imagenes/logo.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    </head>
+    <body class="container">
+        <%- include('header') %>
+        <h2>Modificar Curso</h2>
+        <form method="post" action="/listacurso/modificarcursos">
+            <input type="hidden" name="curso_id" value="<%= curso.id %>" />
+            <div class="row">
+                <div class="col">
+                    <label class="form-label">Nombre:</label>
+                    <input name="curso_nombre" 
+                        type="text" 
+                        class="form-control"
+                        value="<%= curso.nombre %>" />
+                </div>
+                <div class="col">
+                    <label class="form-label">Deporte:</label>
+                    <input name="curso_deporte" 
+                        type="text" 
+                        class="form-control"
+                        value="<%= curso.deporte %>" />
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success">Guardar</button>
+        </form>
+        <%- include('footer')%>
+    </body>
+</html>
