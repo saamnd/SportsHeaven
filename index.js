@@ -158,7 +158,7 @@ app.post('/cursos', async (req, res)=>{
     res.redirect('/listacurso')
 })
 
-app.post('/cursos/modificar', async(req,res)=>{
+app.post('/modificar', async(req,res)=>{
     const id = req.body.curso_id
     const nnombre = req.body.nuevonombre
     const ndeporte = req.body.nuevodeporte
@@ -186,6 +186,22 @@ app.post('/cursos/modificar', async(req,res)=>{
     
     res.redirect('/listacurso')
 })
+
+app.get('/modificar', async (req, res) => {
+    const cursos = await db.Curso.findAll({
+        order : [
+            ['id', 'ASC']
+        ]
+    });
+
+    res.render('modificarcursos', {
+        cursos : cursos
+    })
+})
+
+app.get('/modificar', (req, res) => {
+    res.render('modificarcursos')
+  })
 
 app.get('/cursos', (req, res) => {
     res.render('crearcursos')
