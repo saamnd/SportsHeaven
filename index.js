@@ -249,6 +249,45 @@ app.post('/evento/new', async (req, res) => {
     res.redirect('/listadoEventos')
 })
 
+app.get('/listadoEventos/modificareventos/:id', async (req, res) => {
+    const idEvento = req.params.id
+
+    const evento = await db.Evento.findOne({
+        where : {
+            id : idEvento
+        }
+    })
+
+    res.render('modificareventos', {
+        evento : evento,
+    })
+})
+
+app.post('/listadoEventos/modificareventos', async (req, res) => {
+    const idEvento = req.body.evento_id
+    const nombre = req.body.evento_nombre
+    const fecha = req.body.evento_fecha
+    const hora = req.body.evento_hora
+    const ubicacion = req.body.evento_ubicacion
+    const descripcion = req.body.evento_descripcion
+
+    const evento = await db.Evento.findOne({
+        where : {
+            id : idEvento
+        }
+    })
+    evento.nombre = nombre
+    evento.fecha = fecha
+    evento.hora = hora
+    evento.ubicacion = ubicacion
+    evento.descripcion = descripcion
+
+
+    await evento.save()
+
+    res.redirect('/listadoEventos')
+
+})
 
 app.get('/inicio', (req, res) => {
     res.render('inicio')

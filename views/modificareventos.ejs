@@ -12,15 +12,15 @@
     <body class="container">
         <%- include('header')  %>
         <h2>Editar Evento</h2>
-        <form method="post" action="/evento/modificar">
-
+        <form method="post" action="/listadoEventos/modificareventos">
+            <input type="hidden" name="evento_id" value="<%= evento.id %>" />
             <div>
                 <label class="form-label">Nombre del evento:</label>
-                <input name="evento_fecha" type="text" class="form-control" value="<%= evento.nombre %>"/>
+                <input name="evento_nombre" type="text" class="form-control" value="<%= evento.nombre %>"/>
             </div>
             <div>
                 <label class="form-label">Fecha del evento:</label>
-                <input name="evento_duracion" type="datetime" class="form-control" value="<%= evento.fecha %>"/>
+                <input name="evento_fecha" type="datetime" class="form-control" value="<%= evento.fecha %>"/>
             </div>
             <div>
                 <label class="form-label">Hora del evento:</label>
