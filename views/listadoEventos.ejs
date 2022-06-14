@@ -30,6 +30,7 @@
                     <p class="card-text">Descripcion: <%= evento.descripcion%></p>
                     <a href="#" class="btn btn-dark">Unirse</a>
                     <a class="btn btn-success" href="/listadoEventos/modificareventos/<%= evento.id %>">Modificar evento</a>
+                    <a class="btn btn-danger" href="/evento/eliminar/<%= evento.id %>">Eliminar evento</a>
                   </div>
               </div>
             <% }) %>

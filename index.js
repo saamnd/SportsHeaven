@@ -322,5 +322,15 @@ app.get('/inicio', (req, res) => {
 app.listen(PORT,()=>{
     console.log(`El servidor se inicio en el puerto: ${PORT}`)
 })
+
+app.get('/evento/eliminar/:codigo', async (req, res) => {
+    const idEvento = req.params.codigo
+    await db.Evento.destroy({
+        where : {
+            id : idEvento
+        }
+    })
+    res.redirect('/listadoEventos')
+})
  
  
