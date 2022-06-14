@@ -1,4 +1,4 @@
-const  express=require('express')
+const  express= require('express')
 const PORT = process.env.PORT || 8080
 const bodyParser = require('body-parser')
 const session = require('express-session')
@@ -33,24 +33,32 @@ app.post('/registro', async (req, res)=>{
     const ecorreo = req.body.ncorreo
     const enombre = req.body.nnombre
     const eapellido = req.body.napellido
-    const efecha = req.body.nfecha 
+    const efecha = req.body.nfecha //no dejar fecha vacia
     const econtra = req.body.ncontra
     const econtra2 = req.body.ncontra2
-    const fechann = efecha.slice(0,4)
 
     if (await db.Usuario.findOne({
         where: {correo: ecorreo}}) != undefined) {
-            res.render('error')
+            error = "0"
+            console.log("Correo ya registrado")
+            res.render('errorregistro', {error: error})
     }else{
-        await db.Usuario.create({
-            rol: erol,
-            nombre: enombre,
-            apellido: eapellido,
-            correo: ecorreo,
-            contra: econtra,
-            fecha: efecha
-        })
-        res.redirect('/')
+        if(econtra != econtra2){
+            error = "1"
+            console.log("Contraseñas no coinciden")
+            res.render('errorregistro', {error: error})
+        }
+        else{
+            await db.Usuario.create({
+                rol: erol,
+                nombre: enombre,
+                apellido: eapellido,
+                correo: ecorreo,
+                password: econtra,
+                fechan: efecha,
+            })
+            res.redirect('/')
+        }
     }
     
 })
