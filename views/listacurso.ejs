@@ -45,36 +45,23 @@
                   </div>
                 </nav>
         </div>
-        <table class="table table-hover">
-          <thead>
-              <tr>
-                  <th>Id</th>
-                  <th>Nombre</th>
-                  <th>Deporte</th>
-                  <th>Descripcion</th>
-                  <th>Precio</th>
-                  <th>Calificacion</th>
-                  <th>Acciones</th>
-
-              </tr>
-          </thead>
+        <div class="row mb-3 mt-3">
           <tbody>
-              <% cursos.forEach( (curso) => { %>
-                  <tr>
-                      <td><%= curso.id %></td>
-                      <td><%= curso.nombre %></td>
-                      <td><%= curso.deporte%></td>
-                      <td><%= curso.descripcion%></td>
-                      <td><%= curso.precio%></td>
-                      <td><%= curso.calificacion%></td>
-                      <td>
-                          <a class="btn btn-success" href="/listacurso/modificarcursos/<%= curso.id %>">Modificar curso</a>
-                          <a class="btn btn-success" href="/listacurso/eliminar/<%= curso.id %>">Eliminar curso</a>
-                      </td>
-                  </tr>
-              <% }) %>
+            <% cursos.forEach( (curso) => { %>
+              <div class="card ms-5 mb-3" style="width: 18rem;">
+                  <div class="card-body">
+                    <h5 class="card-title"><%= curso.nombre %></h5>
+                    <p class="card-text">Deporte: <%= curso.deporte%></p>
+                    <p class="card-text">Descripcion: <%= curso.descripcion%></p>
+                    <p class="card-text">Precio: <%= curso.precio%></p>
+                    <p class="card-text">Calificacion: <%= curso.calificacion%></p>
+                    <a class="btn btn-success" href="/listacurso/modificarcursos/<%= curso.id %>">Modificar curso</a>
+                    <a class="btn btn-success" href="/listacurso/eliminar/<%= curso.id %>">Eliminar curso</a>
+                  </div>
+              </div>
+            <% }) %>
           </tbody>
-      </table>
+        </div>
     </div>
     
         <%- include('footer')%>
