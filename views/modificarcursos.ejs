@@ -3,7 +3,7 @@
     <head>
         <title>Sports Heaven</title>
         <meta charset="utf-8" />
-        <link rel="shortcut icon" href="/imagenes/logo.png" />
+        <link rel="shortcut icon" href="/icons/logo.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
@@ -27,6 +27,20 @@
                         type="text" 
                         class="form-control"
                         value="<%= curso.deporte %>" />
+                </div>
+                <div class="col">
+                    <label class="form-label">Descripcion:</label>
+                    <input name="curso_descripcion" 
+                        type="text" 
+                        class="form-control"
+                        value="<%= curso.descripcion %>" />
+                </div>
+                <div class="col">
+                    <label class="form-label">Precio:</label>
+                    <input name="curso_precio" 
+                        type="text" 
+                        class="form-control"
+                        value="<%= curso.precio %>" />
                 </div>
             </div>
             <button type="submit" class="btn btn-success">Guardar</button>
