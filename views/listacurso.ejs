@@ -50,6 +50,7 @@
             <% cursos.forEach( (curso) => { %>
               <div class="card ms-5 mb-3" style="width: 18rem;">
                   <div class="card-body">
+                    <p class="card-text">Id: <%= curso.id %></p>
                     <h5 class="card-title"><%= curso.nombre %></h5>
                     <p class="card-text">Deporte: <%= curso.deporte%></p>
                     <p class="card-text">Descripcion: <%= curso.descripcion%></p>

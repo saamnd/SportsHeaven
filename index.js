@@ -165,6 +165,7 @@ app.get('/listacurso', async(req, res) => {
         let nuevaListaCursos = []
         for (let curso of cursos) {
             nuevaListaCursos.push({
+                id : curso.id,
                 nombre : curso.nombre,
                 deporte : curso.deporte,
                 descripcion :curso.descripcion,
