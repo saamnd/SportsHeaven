@@ -176,6 +176,8 @@ app.post('/listacurso/modificarcursos', async (req, res) => {
     const idCurso = req.body.curso_id
     const nombre = req.body.curso_nombre
     const deporte = req.body.curso_deporte
+    const descripcion = req.body.curso_descripcion
+    const precio = req.body.curso_precio
 
     const curso = await db.Curso.findOne({
         where : {
@@ -184,6 +186,8 @@ app.post('/listacurso/modificarcursos', async (req, res) => {
     })
     curso.nombre = nombre
     curso.deporte = deporte
+    curso.descripcion = descripcion
+    curso.precio = precio
 
 
     await curso.save()
