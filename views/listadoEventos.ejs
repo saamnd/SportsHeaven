@@ -15,8 +15,7 @@
       <div>
           <center><h1>Eventos</h1></center>
           <div class="mb-3 mt-3">
-                <a href="/evento/new"><button class="btn btn-dark" type="submit">Crear Evento</button></a>
-                <a href="/evento/update"></a><button class="btn btn-dark" type="submit">Modificar Evento</button></a>
+                <a href="/evento/new"><button class="btn btn-dark" type="submit">Crear Evento</button></a>     
           </div>
         <div class="row mb-3 mt-3">
           <tbody>
@@ -30,6 +29,7 @@
                     <p class="card-text">Ubicacion: <%= evento.ubicacion%></p>
                     <p class="card-text">Descripcion: <%= evento.descripcion%></p>
                     <a href="#" class="btn btn-dark">Unirse</a>
+                    <a class="btn btn-success" href="/listadoEventos/modificareventos/<%= evento.id %>">Modificar evento</a>
                   </div>
               </div>
             <% }) %>
