@@ -6,6 +6,8 @@ const db = require('./dao/models')
 //const usuario = require('./dao/models/usuario')
 const app = express()
 
+const path = require('path');
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
     extended:true
@@ -19,6 +21,12 @@ app.use(session({
     saveUninitialized : false
 }))
 
+///////
+const nosotrosRouter=require('./dao/routes/nosotros');
+app.use('/',nosotrosRouter);
+
+const logoutR=require('./dao/routes/logout');
+app.use('/',logoutR);
 
 app.get('/', (req, res) => {
     res.render('inicio')
@@ -107,12 +115,12 @@ app.post('/login', async (req, res) => {
         
 })
 
-app.get('/logout', (req, res) => {
+/*app.get('/logout', (req, res) => {
     req.session.destroy(() => {
         res.redirect('/')
     })
     console.log("Se cerró la sesión")
-})
+})*/
 
 app.get('/listadoEventos', async(req, res) => {
     const timestampActual = new Date().getTime();
