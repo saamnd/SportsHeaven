@@ -132,6 +132,7 @@ app.get('/listadoEventos', async(req, res) => {
         let nuevaListaEventos = []
         for (let evento of eventos) {
             nuevaListaEventos.push({
+                id : evento.id,
                 nombre : evento.nombre,
                 fecha : evento.fecha,
                 hora : evento.hora,
@@ -315,6 +316,17 @@ app.post('/listadoEventos/modificareventos', async (req, res) => {
 
 })
 
+app.get('/listadoEventos/eliminar/:id', async (req, res) => {
+    const evento = req.params.id
+    await db.Evento.destroy({
+        where : {
+            id : evento
+        }
+    })
+    res.redirect('/listadoEventos')
+})
+ 
+
 app.get('/inicio', (req, res) => {
     res.render('inicio')
 })
@@ -323,14 +335,5 @@ app.listen(PORT,()=>{
     console.log(`El servidor se inicio en el puerto: ${PORT}`)
 })
 
-app.get('/evento/eliminar/:codigo', async (req, res) => {
-    const idEvento = req.params.codigo
-    await db.Evento.destroy({
-        where : {
-            id : idEvento
-        }
-    })
-    res.redirect('/listadoEventos')
-})
- 
+
  
