@@ -371,12 +371,47 @@ app.get('/inicio', (req, res) => {
         nombre: req.session.nombre})
 })
 
-app.get('/perfil', (req, res) => {
+app.get('/perfil', async(req, res) => {
+    const eventos = await db.Evento.findAll({
+        order : [
+            ['id', 'DESC']
+        ]
+    });
+    
+    let nuevaListaEventos = []
+    for (let evento of eventos) {
+        nuevaListaEventos.push({
+            id : evento.id,
+            nombre : evento.nombre,
+            fecha : evento.fecha,
+            hora : evento.hora,
+            ubicacion : evento.ubicacion,
+            descripcion : evento.descripcion
+        })
+    }
+    const cursos = await db.Curso.findAll({
+        order : [
+            ['id', 'DESC']
+        ]
+    });
+    
+    let nuevaListaCursos = []
+    for (let curso of cursos) {
+        nuevaListaCursos.push({
+            nombre : curso.nombre,
+            deporte : curso.deporte,
+            descripcion :curso.descripcion,
+            precio : curso.precio,
+            calificacion : curso.calificacion
+        })
+    }
     res.render('perfil',{
         rol: req.session.rol,
         nombre: req.session.nombre,
         apellido: req.session.apellido,
         correo: req.session.correo,
+        eventos : nuevaListaEventos,
+        cursos : nuevaListaCursos,
     })
 })
 
