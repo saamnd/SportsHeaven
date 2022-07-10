@@ -3,7 +3,7 @@ const PORT = process.env.PORT || 8080
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const db = require('./dao/models')
-//const usuario = require('./dao/models/usuario')
+const usuario = require('./dao/models/usuario')
 const app = express()
 
 const path = require('path');
@@ -29,11 +29,20 @@ const logoutR=require('./dao/routes/logout');
 app.use('/',logoutR);
 
 app.get('/', (req, res) => {
-    res.render('inicio')
+    res.render('inicio',{
+        rol: req.session.rol,
+        nombre: req.session.nombre    
+    })
   })
 
 app.get('/registro', async (req, res) => {
-    res.render('registro')
+    if(req.session.rol != undefined){
+        res.redirect('/')
+    }
+    else{
+    res.render('registro',{
+        rol: req.session.rol,
+        nombre: req.session.nombre})}
   })
 
 app.post('/registro', async (req, res)=>{
@@ -71,13 +80,14 @@ app.post('/registro', async (req, res)=>{
     
 })
 
-
 app.get('/login', (req,res) => {
     if(req.session.rol != undefined){
         res.redirect('/')
     }
     else{
-    res.render('login')}
+    res.render('login',{
+        rol: req.session.rol,
+        nombre: req.session.nombre})}
 })
 
 app.post('/login', async (req, res) => {
@@ -128,7 +138,9 @@ app.get('/listadoEventos', async(req, res) => {
 
     if (dif >= 3 * 60 * 60 * 1000) {
         req.session.destroy() // Destruyes la sesion
-        res.render('/inicio')
+        res.render('/inicio',{
+            rol: req.session.rol,
+            nombre: req.session.nombre})
     }else {
         // Obtener torneos de la base de datos
         const eventos = await db.Evento.findAll({
@@ -150,7 +162,9 @@ app.get('/listadoEventos', async(req, res) => {
         }
 
         res.render('listadoEventos', {
-            eventos : nuevaListaEventos
+            eventos : nuevaListaEventos,
+            rol: req.session.rol,
+            nombre: req.session.nombre
         })
     }
         
@@ -162,7 +176,9 @@ app.get('/listacurso', async(req, res) => {
 
     if (dif >= 3 * 60 * 60 * 1000) {
         req.session.destroy() // Destruyes la sesion
-        res.render('/inicio')
+        res.render('/inicio',{
+            rol: req.session.rol,
+            nombre: req.session.nombre})
     }else {
         // Obtener cursos de la base de datos
         const cursos = await db.Curso.findAll({
@@ -184,7 +200,9 @@ app.get('/listacurso', async(req, res) => {
         }
 
         res.render('listacurso', {
-            cursos : nuevaListaCursos
+            cursos : nuevaListaCursos,
+            rol: req.session.rol,
+            nombre: req.session.nombre
         })
     }
         
@@ -220,6 +238,8 @@ app.get('/listacurso/modificarcursos/:id', async (req, res) => {
 
     res.render('modificarcursos', {
         curso : curso,
+        rol: req.session.rol,
+        nombre: req.session.nombre
     })
 })
 
@@ -248,7 +268,9 @@ app.post('/listacurso/modificarcursos', async (req, res) => {
 })
 
 app.get('/cursos', (req, res) => {
-    res.render('crearcursos')
+    res.render('crearcursos',{
+        rol: req.session.rol,
+        nombre: req.session.nombre})
   })
 
 
@@ -263,7 +285,9 @@ app.get('/listacurso/eliminar/:id', async (req, res) => {
 })
 
 app.get('/evento/new', (req, res) => {
-    res.render('crearEvento')
+    res.render('crearEvento',{
+        rol: req.session.rol,
+        nombre: req.session.nombre})
 })
 
 app.post('/evento/new', async (req, res) => {
@@ -295,6 +319,8 @@ app.get('/listadoEventos/modificareventos/:id', async (req, res) => {
 
     res.render('modificareventos', {
         evento : evento,
+        rol: req.session.rol,
+        nombre: req.session.nombre
     })
 })
 
@@ -336,7 +362,9 @@ app.get('/listadoEventos/eliminar/:id', async (req, res) => {
  
 
 app.get('/inicio', (req, res) => {
-    res.render('inicio')
+    res.render('inicio',{
+        rol: req.session.rol,
+        nombre: req.session.nombre})
 })
 
 app.listen(PORT,()=>{

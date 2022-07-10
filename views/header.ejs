@@ -1,42 +1,14 @@
-<div class="mb-3">
-    <!-- Cabecera y menu navegacion-->
-    <link rel="stylesheet" href="/css/index.css" type="text/css"> 
-    <nav class="navbar navbar-dark" style="background-color: #0c2f47">
-        <div class="container-fluid">
-            
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-
-              <a  href="/" class="navbar-brand" >
-                <img src="/icons/logoheader.png" width="35" height="30" alt="">
-                Sports Heaven </a>
-                
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                      <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/listacurso">Cursos</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link active" href="/listadoEventos">Eventos</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link active" href="#">+++</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link disabled"></a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link active" href="/login">Iniciar Sesión</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link active" href="/registro">Registrarse</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link active" href="/logout">Cerrar Sesión</a>
-                      </li>
-                    </ul>
-                  </div>
-        </div>
-    </nav>
-</div>
+<% switch (rol) {
+  case 'profe' : %>
+  <%- include('menuprofe')  %>
+          <% break;
+  
+  case 'alumno' : %>
+  <%- include('menualumno')  %>
+          <% break;
+  
+  default : %>
+  <%- include('menu')  %>
+          <% break;
+  
+  } %>
