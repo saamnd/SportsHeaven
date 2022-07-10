@@ -98,8 +98,12 @@ app.post('/login', async (req, res) => {
             console.log("Credenciales correctas")
             req.session.rol = usuarioA.rol
             req.session.nombre = usuarioA.nombre
+            req.session.apellido = usuarioA.apellido
+            req.session.correo = usuarioA.correo
             console.log("sesion rol: ", req.session.rol)
             console.log("sesion nombre: ", req.session.nombre)
+            console.log("sesion apellido: ", req.session.apellido)
+            console.log("sesion correo: ", req.session.correo)
             res.redirect('/')
         }
         else{
@@ -337,6 +341,15 @@ app.get('/listadoEventos/eliminar/:id', async (req, res) => {
 
 app.get('/inicio', (req, res) => {
     res.render('inicio')
+})
+
+app.get('/perfil', (req, res) => {
+    res.render('perfil',{
+        rol: req.session.rol,
+        nombre: req.session.nombre,
+        apellido: req.session.apellido,
+        correo: req.session.correo,
+    })
 })
 
 app.listen(PORT,()=>{
