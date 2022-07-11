@@ -11,7 +11,11 @@
     </head>
     <body class="">
         <%- include('header')  %>
-        
+        <% if (usuario) { %>
+            <h4 style="margin-left: 50px;">
+                Hola, <%= usuario.nombre %> <%= usuario.apellido %>
+            </h4>
+        <% } %>
         <%- include('footer') %>
     </body>
 </html>
