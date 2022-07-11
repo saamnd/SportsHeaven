@@ -3,7 +3,7 @@ const PORT = process.env.PORT || 8080
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const db = require('./dao/models')
-const usuario = require('./dao/models/usuario')
+//const usuario = require('./dao/models/usuario')
 const app = express()
 
 const path = require('path');
@@ -18,7 +18,8 @@ app.set('view engine','ejs')
 app.use(session({
     secret : "sam",
     resave : false,
-    saveUninitialized : false
+    saveUninitialized : false, 
+    cookie: { maxAge: 24 * 60 * 60000 },
 }))
 
 ///////
@@ -31,7 +32,7 @@ app.use('/',logoutR);
 app.get('/', (req, res) => {
     res.render('inicio',{
         rol: req.session.rol,
-        nombre: req.session.nombre    
+        usuario: req.session.usuario    
     })
   })
 
@@ -102,7 +103,7 @@ app.post('/login', async (req, res) => {
                 usuarioA = usuario
             }
     })
-
+    console.log('usuario', usuarioA)
     if(usuarioA!= null){
         if(usuarioA.password == passwordA){
             console.log("Credenciales correctas")
@@ -152,16 +153,49 @@ app.get('/listadoEventos', async(req, res) => {
                 ['id', 'DESC']
             ]
         });
-        
+        // begin changes
+    const totalAsistentesEventos = await db.UsuarioEvento.findAll({
+        attributes: [
+            'id_evento',
+            [
+                db.sequelize.fn('COUNT', db.sequelize.col('id')),
+                'total_asistentes',
+            ],
+        ],
+        group: ['id_evento'],
+        raw: true,
+    })
+    const [results] = await db.sequelize.query(
+        'SELECT UE.*,U.nombre, U.apellido FROM "UsuarioEvento" UE LEFT JOIN "Usuario" U ON U.id = UE.id_usuario'
+    )
+    const usuarioEventos = {}
+    for (const result of results) {
+        if (!usuarioEventos[result.id_evento]) {
+            usuarioEventos[result.id_evento] = [
+                { nombre: result.nombre, apellido: result.apellido },
+            ]
+        } else {
+            usuarioEventos[result.id_evento].push({
+                nombre: result.nombre,
+                apellido: result.apellido,
+            })
+        }
+    }
+    // end changes
         let nuevaListaEventos = []
         for (let evento of eventos) {
+            const { total_asistentes: totalAsistentes } =
+            totalAsistentesEventos.find((uE) => uE.id_evento === evento.id) ??
+            {}
             nuevaListaEventos.push({
                 id : evento.id,
                 nombre : evento.nombre,
                 fecha : evento.fecha,
                 hora : evento.hora,
                 ubicacion : evento.ubicacion,
-                descripcion : evento.descripcion
+                descripcion : evento.descripcion,
+                totalAsistentes: totalAsistentes ?? 0,
+                asistentes: usuarioEventos[evento.id] ?? [],
             })
         }
 
@@ -311,7 +345,39 @@ app.post('/evento/new', async (req, res) => {
 
     res.redirect('/listadoEventos')
 })
+// BEGIN CHANGES
 
+app.post('/evento/unirse', async (req, res) => {
+    if (!req.session.usuario) {
+        return res.json({ success: false })
+    }
+    const userId = req.session.usuario.id
+    const eventoId = req.body.id
+    const evento = await db.Evento.findOne({
+        where: { id: eventoId },
+        raw: true,
+    })
+
+    if (evento.fecha < new Date()) {
+        return res.json({ success: false, code: 'OLD_EVENT' })
+    }
+    const usuarioEvento = await db.UsuarioEvento.findOne({
+        where: { id_usuario: userId, id_evento: eventoId },
+    })
+    if (!usuarioEvento) {
+        await db.UsuarioEvento.create({
+            id_usuario: userId,
+            id_evento: eventoId,
+            created_at: new Date(),
+            updated_at: new Date(),
+        })
+        res.json({ success: true, code: 'ADDED' })
+    } else {
+        res.json({ success: false, code: 'DUPLICATED' })
+    }
+})
+
+// END CHANGES
 app.get('/listadoEventos/modificareventos/:id', async (req, res) => {
     const idEvento = req.params.id
 
