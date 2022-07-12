@@ -495,6 +495,7 @@ app.post('/registroProfe', async (req, res)=>{
         }
         else{
             await db.Profesor.create({
+                rol: "profe",
                 nombre: enombre,
                 apellido: eapellido,
                 correo: ecorreo,
