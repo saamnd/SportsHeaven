@@ -312,7 +312,35 @@ app.get('/cursos', (req, res) => {
         nombre: req.session.nombre})
   })
 
+  app.post('/curso/Unirse', async (req, res) => {
+    if (!req.session.usuario) {
+        return res.json({ success: false })
+    }
+    const userId = req.session.usuario.id
+    const cursoId = req.body.id
+    const curso = await db.Curso.findOne({
+        where: { id: cursoId },
+        raw: true,
+    })
 
+    if (curso.fecha < new Date()) {
+        return res.json({ success: false, code: 'OLD_EVENT' })
+    }
+    const usuarioCurso = await db.UsuarioCurso.findOne({
+        where: { id_usuario: userId, id_curso: cursoId },
+    })
+    if (!usuarioCurso) {
+        await db.UsuarioCurso.create({
+            id_usuario: userId,
+            id_curso: eventoId,
+            created_at: new Date(),
+            updated_at: new Date(),
+        })
+        res.json({ success: true, code: 'ADDED' })
+    } else {
+        res.json({ success: false, code: 'DUPLICATED' })
+    }
+})
 app.get('/listacurso/eliminar/:id', async (req, res) => {
     const curso = req.params.id
     await db.Curso.destroy({
