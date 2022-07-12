@@ -58,6 +58,7 @@
                     <p class="card-text">Calificacion: <%= curso.calificacion%></p>
                     <a class="btn btn-success" href="/listacurso/modificarcursos/<%= curso.id %>">Modificar curso</a>
                     <a class="btn btn-success" href="/listacurso/eliminar/<%= curso.id %>">Eliminar curso</a>
+                    <a href="#" class="btn btn-success" data-id="<%= curso.id %>">Unirse a curso</a>
                   </div>
               </div>
             <% }) %>

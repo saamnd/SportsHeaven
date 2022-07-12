@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <div class="mb-3">
     <!-- Cabecera y menu navegacion-->
     <link rel="stylesheet" href="/css/index.css" type="text/css"> 
@@ -22,41 +21,18 @@
                         <a class="nav-link active" href="/listadoEventos">Eventos</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link active" href="/listaProfes">Profesores</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link active" href="#">--------------------</a>
+                        <a class="nav-link active" href="#">+++</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link disabled"></a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link active" href="/login">Iniciar Sesión</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link active" href="/regTipoUsuario">Registrarse</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link active" href="/logout">Cerrar Sesión</a>
                       </li>
                     </ul>
                   </div>
+                  <a href="/perfil"><button type="button" class="btn btn-light btn-success" >Profesor <%= nombre %></button></a>
+                 
         </div>
     </nav>
 </div>
-=======
-<% switch (rol) {
-  case 'profe' : %>
-  <%- include('menuprofe')  %>
-          <% break;
-  
-  case 'alumno' : %>
-  <%- include('menualumno')  %>
-          <% break;
-  
-  default : %>
-  <%- include('menu')  %>
-          <% break;
-  
-  } %>
->>>>>>> a9336bd782d4e5eb19e9c472931e8c32f3d2f5c8

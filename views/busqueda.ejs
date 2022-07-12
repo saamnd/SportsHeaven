@@ -4,14 +4,19 @@
         <title>Sports Heaven</title>
         <meta charset="utf-8" />
         <link rel="shortcut icon" href="/icons/logo.png" />
-        <link rel="stylesheet" href="/css/index.css" type="text/css"> 
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
     </head>
     <body class="">
-        <%- include('header')  %>
-
-        <%- include('footer') %>
+        <%- include('header') %>
+        <div class="container">
+            <p class="h1 mb-4">Agregar amigos</p>
+            <form class="d-flex" method="post" action="/busqueda">
+                <input name="amigo" class="form-control me-2" type="search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Buscar!</button>
+              </form>
+        </div>
+        <%- include('footer')%>
     </body>
 </html>

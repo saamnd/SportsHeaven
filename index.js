@@ -18,7 +18,8 @@ app.set('view engine','ejs')
 app.use(session({
     secret : "sam",
     resave : false,
-    saveUninitialized : false
+    saveUninitialized : false, 
+    cookie: { maxAge: 24 * 60 * 60000 },
 }))
 
 ///////
@@ -29,11 +30,21 @@ const logoutR=require('./dao/routes/logout');
 app.use('/',logoutR);
 
 app.get('/', (req, res) => {
-    res.render('inicio')
+    res.render('inicio',{
+        rol: req.session.rol,
+        usuario: req.session.usuario,
+        nombre: req.session.nombre     
+    })
   })
 
 app.get('/registro', async (req, res) => {
-    res.render('registro')
+    if(req.session.rol != undefined){
+        res.redirect('/')
+    }
+    else{
+    res.render('registro',{
+        rol: req.session.rol,
+        nombre: req.session.nombre})}
   })
 
 app.post('/registro', async (req, res)=>{
@@ -71,13 +82,14 @@ app.post('/registro', async (req, res)=>{
     
 })
 
-
 app.get('/login', (req,res) => {
     if(req.session.rol != undefined){
         res.redirect('/')
     }
     else{
-    res.render('login')}
+    res.render('login',{
+        rol: req.session.rol,
+        nombre: req.session.nombre})}
 })
 
 app.post('/login', async (req, res) => {
@@ -92,14 +104,18 @@ app.post('/login', async (req, res) => {
                 usuarioA = usuario
             }
     })
-
+    console.log('usuario', usuarioA)
     if(usuarioA!= null){
         if(usuarioA.password == passwordA){
             console.log("Credenciales correctas")
             req.session.rol = usuarioA.rol
             req.session.nombre = usuarioA.nombre
+            req.session.apellido = usuarioA.apellido
+            req.session.correo = usuarioA.correo
             console.log("sesion rol: ", req.session.rol)
             console.log("sesion nombre: ", req.session.nombre)
+            console.log("sesion apellido: ", req.session.apellido)
+            console.log("sesion correo: ", req.session.correo)
             res.redirect('/')
         }
         else{
@@ -128,7 +144,9 @@ app.get('/listadoEventos', async(req, res) => {
 
     if (dif >= 3 * 60 * 60 * 1000) {
         req.session.destroy() // Destruyes la sesion
-        res.render('/inicio')
+        res.render('/inicio',{
+            rol: req.session.rol,
+            nombre: req.session.nombre})
     }else {
         // Obtener torneos de la base de datos
         const eventos = await db.Evento.findAll({
@@ -136,21 +154,56 @@ app.get('/listadoEventos', async(req, res) => {
                 ['id', 'DESC']
             ]
         });
-        
+        // begin changes
+    const totalAsistentesEventos = await db.UsuarioEvento.findAll({
+        attributes: [
+            'id_evento',
+            [
+                db.sequelize.fn('COUNT', db.sequelize.col('id')),
+                'total_asistentes',
+            ],
+        ],
+        group: ['id_evento'],
+        raw: true,
+    })
+    const [results] = await db.sequelize.query(
+        'SELECT UE.*,U.nombre, U.apellido FROM "UsuarioEvento" UE LEFT JOIN "Usuario" U ON U.id = UE.id_usuario'
+    )
+    const usuarioEventos = {}
+    for (const result of results) {
+        if (!usuarioEventos[result.id_evento]) {
+            usuarioEventos[result.id_evento] = [
+                { nombre: result.nombre, apellido: result.apellido },
+            ]
+        } else {
+            usuarioEventos[result.id_evento].push({
+                nombre: result.nombre,
+                apellido: result.apellido,
+            })
+        }
+    }
+    // end changes
         let nuevaListaEventos = []
         for (let evento of eventos) {
+            const { total_asistentes: totalAsistentes } =
+            totalAsistentesEventos.find((uE) => uE.id_evento === evento.id) ??
+            {}
             nuevaListaEventos.push({
                 id : evento.id,
                 nombre : evento.nombre,
                 fecha : evento.fecha,
                 hora : evento.hora,
                 ubicacion : evento.ubicacion,
-                descripcion : evento.descripcion
+                descripcion : evento.descripcion,
+                totalAsistentes: totalAsistentes ?? 0,
+                asistentes: usuarioEventos[evento.id] ?? [],
             })
         }
 
         res.render('listadoEventos', {
-            eventos : nuevaListaEventos
+            eventos : nuevaListaEventos,
+            rol: req.session.rol,
+            nombre: req.session.nombre
         })
     }
         
@@ -162,7 +215,9 @@ app.get('/listacurso', async(req, res) => {
 
     if (dif >= 3 * 60 * 60 * 1000) {
         req.session.destroy() // Destruyes la sesion
-        res.render('/inicio')
+        res.render('/inicio',{
+            rol: req.session.rol,
+            nombre: req.session.nombre})
     }else {
         // Obtener cursos de la base de datos
         const cursos = await db.Curso.findAll({
@@ -184,7 +239,9 @@ app.get('/listacurso', async(req, res) => {
         }
 
         res.render('listacurso', {
-            cursos : nuevaListaCursos
+            cursos : nuevaListaCursos,
+            rol: req.session.rol,
+            nombre: req.session.nombre
         })
     }
         
@@ -220,6 +277,8 @@ app.get('/listacurso/modificarcursos/:id', async (req, res) => {
 
     res.render('modificarcursos', {
         curso : curso,
+        rol: req.session.rol,
+        nombre: req.session.nombre
     })
 })
 
@@ -248,10 +307,40 @@ app.post('/listacurso/modificarcursos', async (req, res) => {
 })
 
 app.get('/cursos', (req, res) => {
-    res.render('crearcursos')
+    res.render('crearcursos',{
+        rol: req.session.rol,
+        nombre: req.session.nombre})
   })
 
+  app.post('/curso/Unirse', async (req, res) => {
+    if (!req.session.usuario) {
+        return res.json({ success: false })
+    }
+    const userId = req.session.usuario.id
+    const cursoId = req.body.id
+    const curso = await db.Curso.findOne({
+        where: { id: cursoId },
+        raw: true,
+    })
 
+    if (curso.fecha < new Date()) {
+        return res.json({ success: false, code: 'OLD_EVENT' })
+    }
+    const usuarioCurso = await db.UsuarioCurso.findOne({
+        where: { id_usuario: userId, id_curso: cursoId },
+    })
+    if (!usuarioCurso) {
+        await db.UsuarioCurso.create({
+            id_usuario: userId,
+            id_curso: eventoId,
+            created_at: new Date(),
+            updated_at: new Date(),
+        })
+        res.json({ success: true, code: 'ADDED' })
+    } else {
+        res.json({ success: false, code: 'DUPLICATED' })
+    }
+})
 app.get('/listacurso/eliminar/:id', async (req, res) => {
     const curso = req.params.id
     await db.Curso.destroy({
@@ -263,7 +352,9 @@ app.get('/listacurso/eliminar/:id', async (req, res) => {
 })
 
 app.get('/evento/new', (req, res) => {
-    res.render('crearEvento')
+    res.render('crearEvento',{
+        rol: req.session.rol,
+        nombre: req.session.nombre})
 })
 
 app.post('/evento/new', async (req, res) => {
@@ -283,7 +374,39 @@ app.post('/evento/new', async (req, res) => {
 
     res.redirect('/listadoEventos')
 })
+// BEGIN CHANGES
 
+app.post('/evento/unirse', async (req, res) => {
+    if (!req.session.usuario) {
+        return res.json({ success: false })
+    }
+    const userId = req.session.usuario.id
+    const eventoId = req.body.id
+    const evento = await db.Evento.findOne({
+        where: { id: eventoId },
+        raw: true,
+    })
+
+    if (evento.fecha < new Date()) {
+        return res.json({ success: false, code: 'OLD_EVENT' })
+    }
+    const usuarioEvento = await db.UsuarioEvento.findOne({
+        where: { id_usuario: userId, id_evento: eventoId },
+    })
+    if (!usuarioEvento) {
+        await db.UsuarioEvento.create({
+            id_usuario: userId,
+            id_evento: eventoId,
+            created_at: new Date(),
+            updated_at: new Date(),
+        })
+        res.json({ success: true, code: 'ADDED' })
+    } else {
+        res.json({ success: false, code: 'DUPLICATED' })
+    }
+})
+
+// END CHANGES
 app.get('/listadoEventos/modificareventos/:id', async (req, res) => {
     const idEvento = req.params.id
 
@@ -295,6 +418,8 @@ app.get('/listadoEventos/modificareventos/:id', async (req, res) => {
 
     res.render('modificareventos', {
         evento : evento,
+        rol: req.session.rol,
+        nombre: req.session.nombre
     })
 })
 
@@ -422,7 +547,97 @@ app.get('/listaProfes', async (req, res) => {
 })
 
 app.get('/inicio', (req, res) => {
-    res.render('inicio')
+    res.render('inicio',{
+        rol: req.session.rol,
+        nombre: req.session.nombre})
+})
+
+app.get('/perfil', async(req, res) => {
+    const eventos = await db.Evento.findAll({
+        order : [
+            ['id', 'DESC']
+        ]
+    });
+    
+    let nuevaListaEventos = []
+    for (let evento of eventos) {
+        nuevaListaEventos.push({
+            id : evento.id,
+            nombre : evento.nombre,
+            fecha : evento.fecha,
+            hora : evento.hora,
+            ubicacion : evento.ubicacion,
+            descripcion : evento.descripcion
+        })
+    }
+    const cursos = await db.Curso.findAll({
+        order : [
+            ['id', 'DESC']
+        ]
+    });
+    
+    let nuevaListaCursos = []
+    for (let curso of cursos) {
+        nuevaListaCursos.push({
+            nombre : curso.nombre,
+            deporte : curso.deporte,
+            descripcion :curso.descripcion,
+            precio : curso.precio,
+            calificacion : curso.calificacion
+        })
+    }
+    res.render('perfil',{
+        rol: req.session.rol,
+        nombre: req.session.nombre,
+        apellido: req.session.apellido,
+        correo: req.session.correo,
+        eventos : nuevaListaEventos,
+        cursos : nuevaListaCursos,
+    })
+})
+
+app.get('/busqueda', (req, res) => {
+    res.render('busqueda',{
+        rol: req.session.rol,
+        nombre: req.session.nombre     
+    })
+  })
+
+  app.post('/busqueda', async (req, res)=>{
+    const amigo = req.body.amigo
+
+    const usuario = await db.Usuario.findOne({
+        where: {
+            nombre: amigo
+        }
+    })
+    if(usuario !=null){
+        res.render('perfil2',{
+            rol: req.session.rol,
+            nombre: req.session.nombre,
+            nombreA: usuario.nombre,
+            apellidoA: usuario.apellido,
+            correoA: usuario.correo,
+        })
+    }
+    else{
+        error = "1"
+        console.log("No se encontró el usuario")
+        res.render('errorbusqueda',{
+            rol: req.session.rol,
+            nombre: req.session.nombre})
+    }
+    
+})
+
+app.get('/perfil2', async(req, res) => {
+  
+    res.render('perfil2',{
+        rol: req.session.rol,
+        nombre: req.session.nombre,
+        apellido: req.session.apellido,
+        correo: req.session.correo,
+    })
 })
 
 app.listen(PORT,()=>{

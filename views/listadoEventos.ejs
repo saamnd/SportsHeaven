@@ -56,9 +56,23 @@
                     <p class="card-text">Hora: <%= evento.hora%></p>
                     <p class="card-text">Ubicacion: <%= evento.ubicacion%></p>
                     <p class="card-text">Descripcion: <%= evento.descripcion%></p>
-                    <a href="#" class="btn btn-dark">Unirse</a>
+                    <p class="card-text">Total Asistentes: <%= evento.totalAsistentes%></p>
+                    <a href="#" class="btn btn-dark unirse-boton" data-id="<%= evento.id %>">Unirse</a>
                     <a class="btn btn-success" href="/listadoEventos/modificareventos/<%= evento.id %>">Modificar evento</a>
                     <a class="btn btn-danger" href="/listadoEventos/eliminar/<%= evento.id %>">Eliminar evento</a>
+
+                    <% if (evento.asistentes.length> 0) { %>
+                      <div>Lista de asistentes:</div>
+                      <ul>
+                        <%for (var asistente in evento.asistentes){%>
+                          <li>
+                            <%=evento.asistentes[asistente].nombre%>
+                              <%=evento.asistentes[asistente].apellido%>
+                          </li>
+                          <%}%>
+                      </ul>
+                      <% } %>
+                      
                   </div>
               </div>
             <% }) %>

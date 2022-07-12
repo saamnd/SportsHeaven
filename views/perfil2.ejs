@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<title>Sports Heaven</title>
+        <meta charset="utf-8" />
+        <link rel="shortcut icon" href="/icons/logo.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+<body class="bodyPerfil">
+    <%- include('header') %>
+    <div class="container"> 
+        <div class="">
+        <div class="bg-white shadow rounded overflow-hidden"> 
+        <div class="px-4 pt-4 pb-4 cover">
+        <div class="media-body mb-4 text-white"> 
+            <h4 class="display-3"><%= nombreA %> <%= apellidoA %></h4> 
+            <p class="small"> <i class="fas fa-map-marker-alt mr-2"></i><%= correoA %></p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a href="/"><button id="butAmigo" class="btn btn-light" type="button">Agregar Amigo</button></a>
+            </div> 
+        </div> 
+        </div> 
+        </div> 
+        <div class="rounded shadow-sm bg-light p-4 d-flex justify-content-end text-center"> 
+        <ul class="list-inline mb-0"> 
+            <li class="list-inline-item"> 
+                <h5 class="font-weight-bold mb-0 d-block">13</h5>
+                <small class="text-muted"> 
+                    <i class="fas fa-image mr-1"></i>Cursos Completados
+                </small> 
+            </li> 
+            <li class="list-inline-item"> 
+                <h5 class="font-weight-bold mb-0 d-block">68</h5>
+                <small class="text-muted"> 
+                    <i class="fas fa-user mr-1"></i>Amigos
+                </small> 
+            </li> 
+            <li class="list-inline-item"> 
+                <h5 class="font-weight-bold mb-0 d-block">8</h5>
+                <small class="text-muted"> 
+                    <i class="fas fa-user mr-1"></i>Deportes Favoritos
+                </small> 
+            </li> 
+        </ul> 
+        </div> 
+        <div class="px-4 py-3"> 
+        <h5 class="mb-3">Acerca de <%= nombreA %></h5> 
+        <div class="p-4 rounded shadow-sm bg-light"> 
+        <p class="font-italic mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam justo neque, consectetur ut nunc non, finibus elementum augue. Nulla dignissim tincidunt ante, eget pulvinar leo laoreet non.</p> 
+        <p class="font-italic mb-0">Aenean id magna sed nisl eleifend laoreet ut quis diam. Praesent nisl urna, tempor id molestie vel, fringilla a velit.</p> 
+        </div> 
+        </div> 
+
+        </div> 
+        </div>
+    </div>
+    <%- include('footer')%>
+</body>
+
