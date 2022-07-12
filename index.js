@@ -545,8 +545,9 @@ app.get('/listaProfes', async (req, res) => {
         }
 
         res.render('listaProfes', {
-            profes : nuevaListaProfes
-        })
+            profes : nuevaListaProfes,
+            rol: req.session.rol,
+            nombre: req.session.nombre})
     }
 })
 
