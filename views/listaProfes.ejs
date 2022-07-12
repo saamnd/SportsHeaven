@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sports Heaven</title>
+        <meta charset="utf-8" />
+        <link rel="shortcut icon" href="/icons/logo.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
+      </head>
+    <body class="container">
+        <%- include('header') %>
+
+    <div method="post">
+      <div>
+          <center><h1>Profesores</h1></center>
+        <div class="card-header">
+          <table class="table table-hover" id="tabla_calificacion">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>NOMBRE</th>
+                <th>APELLIDO</th>
+                <th>PUNATJE</th>
+                <th>CALIFICACION</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% profes.forEach( (profe) => { %>
+                <tr>
+                  <td><%= profe.id %></td>
+                  <td><%= profe.nombre %></td>
+                  <td><%= profe.apellido%></td>
+                  <td><%= profe.calificacion%></td>
+                  <td>
+                    <span class="fa fa-star" style="cursor: pointer;" id="1" value="1" onclick="calificar(this)"></span>
+                    <span class="fa fa-star" style="cursor: pointer;" id="2" value="2" onclick="calificar(this)"></span>
+                    <span class="fa fa-star" style="cursor: pointer;" id="3" value="3" onclick="calificar(this)"></span>
+                    <span class="fa fa-star" style="cursor: pointer;" id="4" value="4" onclick="calificar(this)"></span>
+                    <span class="fa fa-star" style="cursor: pointer;" id="5" value="5" onclick="calificar(this)"></span>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    
+        <%- include('footer')%>
+        <script>
+          $('#tabla_calificacion').on(click, function (){
+            let row = $(this).closest("tr");
+            let nombre = row.find("td:eq(1)").text();
+            let calificacion = row.find("td:eq(2)").text();
+          })
+          var contador;
+          function calificar(item){
+            console.log(item);
+            contador = item.id[0];
+            let nombre = item.id.substring(1);
+
+            for(let i=0; i<5; i++){
+              if(i<contador){
+                document.getElementById((i+1)+nombre).style.color="orange";
+              } else {
+                document.getElementById((i+1)+nombre).style.color="black";
+              }
+            }
+          }
+        </script>
+    </body>
+</html>

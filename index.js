@@ -334,6 +334,92 @@ app.get('/listadoEventos/eliminar/:id', async (req, res) => {
     res.redirect('/listadoEventos')
 })
  
+app.get('/registroProfe', async (req, res) => {
+    res.render('registroProfe')
+  })
+
+app.post('/registroProfe', async (req, res)=>{
+    const erol = req.body.nrol
+    const ecorreo = req.body.ncorreo
+    const enombre = req.body.nnombre
+    const eapellido = req.body.napellido
+    const efecha = req.body.nfecha //no dejar fecha vacia
+    const econtra = req.body.ncontra
+    const econtra2 = req.body.ncontra2
+    const cali = 0.0
+
+    if (await db.Profesor.findOne({
+        where: {correo: ecorreo}}) != undefined) {
+            error = "0"
+            console.log("Correo ya registrado")
+            res.render('errorregistro', {error: error})
+    }else{
+        if(econtra != econtra2){
+            error = "1"
+            console.log("Contraseñas no coinciden")
+            res.render('errorregistro', {error: error})
+        }
+        else{
+            await db.Profesor.create({
+                nombre: enombre,
+                apellido: eapellido,
+                correo: ecorreo,
+                password: econtra,
+                fechan: efecha,
+                calificacion: cali,
+            })
+            res.redirect('/')
+        }
+    }
+    
+})
+
+app.get('/regTipoUsuario', (req, res) => {
+    res.render('regTipoUsuario')
+})
+
+app.post('/regTipoUsuario', async (req, res) => {
+    const rol = req.body.nrol
+
+    if (rol=="alumno") {
+        res.redirect('/registro')
+    } else if (rol=='profe') {
+        res.redirect('/registroProfe')
+    }
+    console.log(rol)
+    res.redirect('/')
+})
+
+app.get('/listaProfes', async (req, res) => {
+    const timestampActual = new Date().getTime();
+    const dif = timestampActual - req.session.lastLogin
+
+    if (dif >= 3 * 60 * 60 * 1000) {
+        req.session.destroy() // Destruyes la sesion
+        res.render('/')
+    }else {
+        // Obtener torneos de la base de datos
+        const profes = await db.Profesor.findAll({
+            order : [
+                ['id', 'DESC']
+            ]
+        });
+        
+        let nuevaListaProfes = []
+        for (let profe of profes) {
+            nuevaListaProfes.push({
+                id : profe.id,
+                nombre : profe.nombre,
+                apellido : profe.apelildo,
+                calificacion : profe.calificacion
+            })
+        }
+
+        res.render('listaProfes', {
+            profes : nuevaListaProfes
+        })
+    }
+})
 
 app.get('/inicio', (req, res) => {
     res.render('inicio')
