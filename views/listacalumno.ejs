@@ -50,6 +50,7 @@
                     <p class="card-text">Precio: <%= curso.precio%></p>
                     <p class="card-text">Calificacion: <%= curso.calificacion%></p>
                     <a href="https://drive.google.com/drive/folders/1Z3FyzinELPogrwT4Zpp72eaIGhB_r6XB?usp=sharing" class="btn btn-success" data-id="<%= curso.id %>">Unirse a curso</a>
+                    <a class="btn btn-warning" href="/listacurso/modificarcalificacioncurso/<%= curso.id %>">Modificar calificacion de curso</a>
                   </div>
               </div>
             <% }) %>
