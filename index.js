@@ -27,6 +27,7 @@ const nosotrosRouter=require('./dao/routes/nosotros');
 app.use('/',nosotrosRouter);
 
 const logoutR=require('./dao/routes/logout');
+const { link } = require('fs')
 app.use('/',logoutR);
 
 app.get('/', (req, res) => {
@@ -241,7 +242,8 @@ app.get('/listacurso', async(req, res) => {
                 deporte : curso.deporte,
                 descripcion :curso.descripcion,
                 precio : curso.precio,
-                calificacion : curso.calificacion
+                calificacion : curso.calificacion,
+                link : curso.link
             })
         }
 
@@ -261,6 +263,7 @@ app.post('/cursos', async (req, res)=>{
     const nprecio = req.body.precio
     const ncalificacion = req.body.calificacion
     const nprofesor = req.body.profesor
+    const nlink = req.body.link
     
     await db.Curso.create({
         nombre: nnombre, //los primeros son como estan en models> curso.js
@@ -268,7 +271,8 @@ app.post('/cursos', async (req, res)=>{
         descripcion: ndescripcion,
         precio: nprecio,
         calificacion: ncalificacion,
-        profesor: nprofesor
+        profesor: nprofesor,
+        link: nlink
     })
     res.redirect('/listacurso')
 })
@@ -295,6 +299,7 @@ app.post('/listacurso/modificarcursos', async (req, res) => {
     const deporte = req.body.curso_deporte
     const descripcion = req.body.curso_descripcion
     const precio = req.body.curso_precio
+    const link = req.body.curso_link
 
     const curso = await db.Curso.findOne({
         where : {
@@ -305,6 +310,7 @@ app.post('/listacurso/modificarcursos', async (req, res) => {
     curso.deporte = deporte
     curso.descripcion = descripcion
     curso.precio = precio
+    curso.link = link
 
 
     await curso.save()
