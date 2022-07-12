@@ -32,7 +32,8 @@ app.use('/',logoutR);
 app.get('/', (req, res) => {
     res.render('inicio',{
         rol: req.session.rol,
-        usuario: req.session.usuario    
+        usuario: req.session.usuario,
+        nombre: req.session.nombre     
     })
   })
 
@@ -478,6 +479,50 @@ app.get('/perfil', async(req, res) => {
         correo: req.session.correo,
         eventos : nuevaListaEventos,
         cursos : nuevaListaCursos,
+    })
+})
+
+app.get('/busqueda', (req, res) => {
+    res.render('busqueda',{
+        rol: req.session.rol,
+        nombre: req.session.nombre     
+    })
+  })
+
+  app.post('/busqueda', async (req, res)=>{
+    const amigo = req.body.amigo
+
+    const usuario = await db.Usuario.findOne({
+        where: {
+            nombre: amigo
+        }
+    })
+    if(usuario !=null){
+        res.render('perfil2',{
+            rol: req.session.rol,
+            nombre: req.session.nombre,
+            nombreA: usuario.nombre,
+            apellidoA: usuario.apellido,
+            correoA: usuario.correo,
+        })
+    }
+    else{
+        error = "1"
+        console.log("No se encontró el usuario")
+        res.render('errorbusqueda',{
+            rol: req.session.rol,
+            nombre: req.session.nombre})
+    }
+    
+})
+
+app.get('/perfil2', async(req, res) => {
+  
+    res.render('perfil2',{
+        rol: req.session.rol,
+        nombre: req.session.nombre,
+        apellido: req.session.apellido,
+        correo: req.session.correo,
     })
 })
 

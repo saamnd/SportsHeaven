@@ -12,8 +12,11 @@
         <div class="bg-white shadow rounded overflow-hidden"> 
         <div class="px-4 pt-4 pb-4 cover">
         <div class="media-body mb-4 text-white"> 
-            <h4 class="display-3"><%= nombre %> <%= apellido %></h4> 
-            <p class="small"> <i class="fas fa-map-marker-alt mr-2"></i>Lima</p>
+            <h4 class="display-3"><%= nombreA %> <%= apellidoA %></h4> 
+            <p class="small"> <i class="fas fa-map-marker-alt mr-2"></i><%= correoA %></p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a href="/"><button id="butAmigo" class="btn btn-light" type="button">Agregar Amigo</button></a>
+            </div> 
         </div> 
         </div> 
         </div> 
@@ -26,7 +29,7 @@
                 </small> 
             </li> 
             <li class="list-inline-item"> 
-                <a href="/busqueda"><h5 class="font-weight-bold mb-0 d-block">0</h5></a>
+                <h5 class="font-weight-bold mb-0 d-block">68</h5>
                 <small class="text-muted"> 
                     <i class="fas fa-user mr-1"></i>Amigos
                 </small> 
@@ -40,44 +43,13 @@
         </ul> 
         </div> 
         <div class="px-4 py-3"> 
-        <h5 class="mb-3">Acerca de mi</h5> 
+        <h5 class="mb-3">Acerca de <%= nombreA %></h5> 
         <div class="p-4 rounded shadow-sm bg-light"> 
         <p class="font-italic mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam justo neque, consectetur ut nunc non, finibus elementum augue. Nulla dignissim tincidunt ante, eget pulvinar leo laoreet non.</p> 
         <p class="font-italic mb-0">Aenean id magna sed nisl eleifend laoreet ut quis diam. Praesent nisl urna, tempor id molestie vel, fringilla a velit.</p> 
         </div> 
         </div> 
-        <div class="py-4 px-4"> 
-        <div class="d-flex align-items-center justify-content-between mb-3"> <h5 class="mb-0">Eventos recientes</h5><a href="#" class="btn btn-link text-muted">Mostrar todos</a> </div> 
-            <div class="row"> 
-                <% eventos.forEach( (evento) => { %>
-                    <div class="card ms-5 mb-3" style="width: 18rem;">
-                        <img src="/icons/pichanga.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title"><%= evento.nombre%></h5>
-                          <p class="card-text">Fecha: <%= evento.fecha%></p>
-                          <p class="card-text">Hora: <%= evento.hora%></p>
-                          <p class="card-text">Ubicacion: <%= evento.ubicacion%></p>
-                          <p class="card-text">Descripcion: <%= evento.descripcion%></p>
-                        </div>
-                    </div>
-                  <% }) %>
-            </div> 
-            <div class="d-flex align-items-center justify-content-between mt-3 mb-3"> <h5 class="mb-0">Cursos recientes</h5><a href="#" class="btn btn-link text-muted">Mostrar todos</a> </div> 
-            <div class="row"> 
-                <% cursos.forEach( (curso) => { %>
-                    <div class="card ms-5 mb-3" style="width: 18rem;">
-                        <img src="/icons/pichanga.png" class="card-img-top" alt="...">
-                        <div class="card-body">
-                          <h5 class="card-title"><%= curso.nombre %></h5>
-                          <p class="card-text">Deporte: <%= curso.deporte%></p>
-                          <p class="card-text">Descripcion: <%= curso.descripcion%></p>
-                          <p class="card-text">Precio: <%= curso.precio%></p>
-                          <p class="card-text">Calificacion: <%= curso.calificacion%></p>
-                        </div>
-                    </div>
-                  <% }) %>
-            </div> 
-        </div> 
+
         </div> 
         </div>
     </div>
