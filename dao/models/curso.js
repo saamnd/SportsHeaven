@@ -22,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     descripcion: DataTypes.STRING,
     precio: DataTypes.FLOAT,
     id_profesor: DataTypes.INTEGER,
-    calificacion: DataTypes.INTEGER
+    calificacion: DataTypes.INTEGER,
+    link: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Curso',
