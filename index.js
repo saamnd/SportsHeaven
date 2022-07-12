@@ -69,7 +69,7 @@ app.post('/registro', async (req, res)=>{
         }
         else{
             await db.Usuario.create({
-                rol: erol,
+                rol: "alumno",
                 nombre: enombre,
                 apellido: eapellido,
                 correo: ecorreo,
