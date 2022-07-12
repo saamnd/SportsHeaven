@@ -82,4 +82,35 @@
     
         <%- include('footer')%>
     </body>
+    <script>
+      const eventos = document.getElementsByClassName("unirse-boton");
+      for (const evento of eventos) {
+        evento.addEventListener('click', async function () {
+          const response = await fetch('/evento/unirse', {
+            method: 'POST',
+            headers: {
+              'content-type': 'application/json'
+            },
+            body: JSON.stringify({
+              id: evento.dataset.id
+            }),
+            credentials: 'include'
+          }).then(res => res.json())
+          if (response.success) {
+            alert("Te uniste al evento con éxito")
+          } else {
+            if (response.code === 'DUPLICATED') {
+              alert("Ya te uniste al evento")
+            } else if (response.code === "OLD_EVENT") {
+              alert("El evento es antiguo, no puedes unirte")
+            } else {
+              alert("Ocurrió un error al unirse al evento")
+            }
+    
+          }
+    
+        })
+      }
+    
+    </script>
 </html>
