@@ -460,7 +460,9 @@ app.get('/listadoEventos/eliminar/:id', async (req, res) => {
 })
  
 app.get('/registroProfe', async (req, res) => {
-    res.render('registroProfe')
+    res.render('registroProfe',{
+        rol: req.session.rol,
+        nombre: req.session.nombre})
   })
 
 app.post('/registroProfe', async (req, res)=>{
@@ -500,8 +502,10 @@ app.post('/registroProfe', async (req, res)=>{
 })
 
 app.get('/regTipoUsuario', (req, res) => {
-    res.render('regTipoUsuario')
-})
+    res.render('regTipoUsuario',{
+        rol: req.session.rol,
+        nombre: req.session.nombre})
+  })
 
 app.post('/regTipoUsuario', async (req, res) => {
     const rol = req.body.nrol
