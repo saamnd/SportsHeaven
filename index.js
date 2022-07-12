@@ -650,21 +650,63 @@ app.get('/busqueda', (req, res) => {
     })
   })
 
-  app.post('/busqueda', async (req, res)=>{
+  app.post ('/busqueda', async (req, res )=> {
+    const amigo = req.body.amigo
+    const profes = await db.Profesor.findAll()
+    const alumns = await db.Usuario.findAll()
+    
+    let nuevaListUser = []
+
+    profes.forEach( (profe)=> {
+        if((profe.nombre.includes(amigo) ||
+        profe.apellido.includes(amigo))
+         && profe.correo != req.session.correo) 
+            {   nuevaListUser.push({
+                nombre : profe.nombre,
+                rolB: profe.rol,
+                apellido : profe.apellido
+            })}})
+
+    alumns.forEach( (alum)=> {
+        if((alum.nombre.includes(amigo) ||
+        alum.apellido.includes(amigo))
+        && alum.correo != req.session.correo)
+        {
+            nuevaListUser.push({
+                nombre : alum.nombre,
+                rolB: alum.rol,
+                apellido : alum.apellido
+            })}})
+
+    res.render('listaAmigos', {
+        amigos : nuevaListUser,
+        rol: req.session.rol,
+        nombre: req.session.nombre,
+        apellido: req.session.apellido
+    })
+    
+})
+
+  app.post ('/busqueda', async (req, res )=> {
     const amigo = req.body.amigo
 
-    const usuario = await db.Usuario.findOne({
+    const usuarioB = await db.Usuario.findOne({
+        where: {
+            nombre: amigo
+        }
+    }) || await db.Profesor.findOne({
         where: {
             nombre: amigo
         }
     })
-    if(usuario !=null){
+    
+    if(usuarioB !=null){
         res.render('perfil2',{
             rol: req.session.rol,
             nombre: req.session.nombre,
-            nombreA: usuario.nombre,
-            apellidoA: usuario.apellido,
-            correoA: usuario.correo,
+            nombreA: usuarioB.nombre,
+            apellidoA: usuarioB.apellido,
+            correoA: usuarioB.correo,
         })
     }
     else{
@@ -677,13 +719,25 @@ app.get('/busqueda', (req, res) => {
     
 })
 
-app.get('/perfil2', async(req, res) => {
-  
+app.get('/perfil2/:amigo', async(req, res) => {
+    const amigo = req.params.amigo
+
+    const usuarioB = await db.Usuario.findOne({
+        where: {
+            nombre: amigo 
+        }
+    }) || await db.Profesor.findOne({
+        where: {
+            nombre: amigo
+        }
+    })
+
     res.render('perfil2',{
         rol: req.session.rol,
         nombre: req.session.nombre,
-        apellido: req.session.apellido,
-        correo: req.session.correo,
+        nombreA: usuarioB.nombre,
+        apellidoA: usuarioB.apellido,
+        correoA: usuarioB.correo
     })
 })
 
