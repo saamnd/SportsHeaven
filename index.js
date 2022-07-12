@@ -313,6 +313,40 @@ app.post('/listacurso/modificarcursos', async (req, res) => {
 
 })
 
+app.get('/listacurso/modificarcalificacioncurso/:id', async (req, res) => {
+    const idCurso = req.params.id
+
+    const curso = await db.Curso.findOne({
+        where : {
+            id : idCurso
+        }
+    })
+
+    res.render('modificarcalificacioncurso', {
+        curso : curso,
+        rol: req.session.rol,
+        nombre: req.session.nombre
+    })
+})
+
+app.post('/listacurso/modificarcalificacioncurso', async (req, res) => {
+    const idCurso = req.body.curso_id
+    const calificacion = req.body.curso_calificacion
+
+    const curso = await db.Curso.findOne({
+        where : {
+            id : idCurso
+        }
+    })
+    curso.calificacion = calificacion
+
+
+    await curso.save()
+
+    res.redirect('/listacurso')
+
+})
+
 app.get('/cursos', (req, res) => {
     res.render('crearcursos',{
         rol: req.session.rol,
