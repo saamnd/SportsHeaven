@@ -120,6 +120,11 @@ app.post('/login', async (req, res) => {
             req.session.nombre = usuarioA.nombre
             req.session.apellido = usuarioA.apellido
             req.session.correo = usuarioA.correo
+            req.session.usuario = {
+                id: usuarioA.id,
+                nombre: usuarioA.nombre,
+                apellido: usuarioA.apellido,
+            }
             console.log("sesion rol: ", req.session.rol)
             console.log("sesion nombre: ", req.session.nombre)
             console.log("sesion apellido: ", req.session.apellido)
