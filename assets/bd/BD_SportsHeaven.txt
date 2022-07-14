@@ -1,0 +1,701 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.0
+-- Dumped by pg_dump version 14.0
+
+-- Started on 2022-07-14 14:18:50
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 225 (class 1259 OID 16855)
+-- Name: Clase; Type: TABLE; Schema: public; Owner: sheaven
+--
+
+CREATE TABLE public."Clase" (
+    id integer NOT NULL,
+    id_curso integer,
+    link character varying(255),
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public."Clase" OWNER TO sheaven;
+
+--
+-- TOC entry 224 (class 1259 OID 16854)
+-- Name: Clase_id_seq; Type: SEQUENCE; Schema: public; Owner: sheaven
+--
+
+CREATE SEQUENCE public."Clase_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Clase_id_seq" OWNER TO sheaven;
+
+--
+-- TOC entry 3390 (class 0 OID 0)
+-- Dependencies: 224
+-- Name: Clase_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sheaven
+--
+
+ALTER SEQUENCE public."Clase_id_seq" OWNED BY public."Clase".id;
+
+
+--
+-- TOC entry 213 (class 1259 OID 16807)
+-- Name: Curso; Type: TABLE; Schema: public; Owner: sheaven
+--
+
+CREATE TABLE public."Curso" (
+    id integer NOT NULL,
+    nombre character varying(255),
+    deporte character varying(255),
+    descripcion character varying(255),
+    precio double precision,
+    id_profesor integer,
+    calificacion integer,
+    link character varying(255),
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public."Curso" OWNER TO sheaven;
+
+--
+-- TOC entry 212 (class 1259 OID 16806)
+-- Name: Curso_id_seq; Type: SEQUENCE; Schema: public; Owner: sheaven
+--
+
+CREATE SEQUENCE public."Curso_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Curso_id_seq" OWNER TO sheaven;
+
+--
+-- TOC entry 3391 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: Curso_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sheaven
+--
+
+ALTER SEQUENCE public."Curso_id_seq" OWNED BY public."Curso".id;
+
+
+--
+-- TOC entry 215 (class 1259 OID 16816)
+-- Name: Evento; Type: TABLE; Schema: public; Owner: sheaven
+--
+
+CREATE TABLE public."Evento" (
+    id integer NOT NULL,
+    nombre character varying(255),
+    ubicacion character varying(255),
+    fecha timestamp with time zone,
+    hora character varying(255),
+    descripcion character varying(255),
+    id_usuario integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public."Evento" OWNER TO sheaven;
+
+--
+-- TOC entry 214 (class 1259 OID 16815)
+-- Name: Evento_id_seq; Type: SEQUENCE; Schema: public; Owner: sheaven
+--
+
+CREATE SEQUENCE public."Evento_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Evento_id_seq" OWNER TO sheaven;
+
+--
+-- TOC entry 3392 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: Evento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sheaven
+--
+
+ALTER SEQUENCE public."Evento_id_seq" OWNED BY public."Evento".id;
+
+
+--
+-- TOC entry 221 (class 1259 OID 16839)
+-- Name: Profesor; Type: TABLE; Schema: public; Owner: sheaven
+--
+
+CREATE TABLE public."Profesor" (
+    id integer NOT NULL,
+    rol character varying(255),
+    nombre character varying(255),
+    apellido character varying(255),
+    correo character varying(255),
+    password character varying(255),
+    fechan timestamp with time zone,
+    calificacion double precision,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public."Profesor" OWNER TO sheaven;
+
+--
+-- TOC entry 223 (class 1259 OID 16848)
+-- Name: Profesor_Evento; Type: TABLE; Schema: public; Owner: sheaven
+--
+
+CREATE TABLE public."Profesor_Evento" (
+    id integer NOT NULL,
+    id_profesor integer,
+    id_evento integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public."Profesor_Evento" OWNER TO sheaven;
+
+--
+-- TOC entry 222 (class 1259 OID 16847)
+-- Name: Profesor_Evento_id_seq; Type: SEQUENCE; Schema: public; Owner: sheaven
+--
+
+CREATE SEQUENCE public."Profesor_Evento_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Profesor_Evento_id_seq" OWNER TO sheaven;
+
+--
+-- TOC entry 3393 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: Profesor_Evento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sheaven
+--
+
+ALTER SEQUENCE public."Profesor_Evento_id_seq" OWNED BY public."Profesor_Evento".id;
+
+
+--
+-- TOC entry 220 (class 1259 OID 16838)
+-- Name: Profesor_id_seq; Type: SEQUENCE; Schema: public; Owner: sheaven
+--
+
+CREATE SEQUENCE public."Profesor_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Profesor_id_seq" OWNER TO sheaven;
+
+--
+-- TOC entry 3394 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: Profesor_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sheaven
+--
+
+ALTER SEQUENCE public."Profesor_id_seq" OWNED BY public."Profesor".id;
+
+
+--
+-- TOC entry 209 (class 1259 OID 16792)
+-- Name: SequelizeMeta; Type: TABLE; Schema: public; Owner: sheaven
+--
+
+CREATE TABLE public."SequelizeMeta" (
+    name character varying(255) NOT NULL
+);
+
+
+ALTER TABLE public."SequelizeMeta" OWNER TO sheaven;
+
+--
+-- TOC entry 217 (class 1259 OID 16825)
+-- Name: Sucripcion; Type: TABLE; Schema: public; Owner: sheaven
+--
+
+CREATE TABLE public."Sucripcion" (
+    id integer NOT NULL,
+    id_usuario integer,
+    id_curso integer,
+    medio_pago character varying(255),
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public."Sucripcion" OWNER TO sheaven;
+
+--
+-- TOC entry 216 (class 1259 OID 16824)
+-- Name: Sucripcion_id_seq; Type: SEQUENCE; Schema: public; Owner: sheaven
+--
+
+CREATE SEQUENCE public."Sucripcion_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Sucripcion_id_seq" OWNER TO sheaven;
+
+--
+-- TOC entry 3395 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: Sucripcion_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sheaven
+--
+
+ALTER SEQUENCE public."Sucripcion_id_seq" OWNED BY public."Sucripcion".id;
+
+
+--
+-- TOC entry 211 (class 1259 OID 16798)
+-- Name: Usuario; Type: TABLE; Schema: public; Owner: sheaven
+--
+
+CREATE TABLE public."Usuario" (
+    id integer NOT NULL,
+    rol character varying(255),
+    nombre character varying(255),
+    apellido character varying(255),
+    correo character varying(255),
+    password character varying(255),
+    fechan timestamp with time zone,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public."Usuario" OWNER TO sheaven;
+
+--
+-- TOC entry 219 (class 1259 OID 16832)
+-- Name: UsuarioEvento; Type: TABLE; Schema: public; Owner: sheaven
+--
+
+CREATE TABLE public."UsuarioEvento" (
+    id integer NOT NULL,
+    id_usuario integer,
+    id_evento integer,
+    "createdAt" timestamp with time zone NOT NULL,
+    "updatedAt" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public."UsuarioEvento" OWNER TO sheaven;
+
+--
+-- TOC entry 218 (class 1259 OID 16831)
+-- Name: UsuarioEvento_id_seq; Type: SEQUENCE; Schema: public; Owner: sheaven
+--
+
+CREATE SEQUENCE public."UsuarioEvento_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."UsuarioEvento_id_seq" OWNER TO sheaven;
+
+--
+-- TOC entry 3396 (class 0 OID 0)
+-- Dependencies: 218
+-- Name: UsuarioEvento_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sheaven
+--
+
+ALTER SEQUENCE public."UsuarioEvento_id_seq" OWNED BY public."UsuarioEvento".id;
+
+
+--
+-- TOC entry 210 (class 1259 OID 16797)
+-- Name: Usuario_id_seq; Type: SEQUENCE; Schema: public; Owner: sheaven
+--
+
+CREATE SEQUENCE public."Usuario_id_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."Usuario_id_seq" OWNER TO sheaven;
+
+--
+-- TOC entry 3397 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: Usuario_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: sheaven
+--
+
+ALTER SEQUENCE public."Usuario_id_seq" OWNED BY public."Usuario".id;
+
+
+--
+-- TOC entry 3210 (class 2604 OID 16858)
+-- Name: Clase id; Type: DEFAULT; Schema: public; Owner: sheaven
+--
+
+ALTER TABLE ONLY public."Clase" ALTER COLUMN id SET DEFAULT nextval('public."Clase_id_seq"'::regclass);
+
+
+--
+-- TOC entry 3204 (class 2604 OID 16810)
+-- Name: Curso id; Type: DEFAULT; Schema: public; Owner: sheaven
+--
+
+ALTER TABLE ONLY public."Curso" ALTER COLUMN id SET DEFAULT nextval('public."Curso_id_seq"'::regclass);
+
+
+--
+-- TOC entry 3205 (class 2604 OID 16819)
+-- Name: Evento id; Type: DEFAULT; Schema: public; Owner: sheaven
+--
+
+ALTER TABLE ONLY public."Evento" ALTER COLUMN id SET DEFAULT nextval('public."Evento_id_seq"'::regclass);
+
+
+--
+-- TOC entry 3208 (class 2604 OID 16842)
+-- Name: Profesor id; Type: DEFAULT; Schema: public; Owner: sheaven
+--
+
+ALTER TABLE ONLY public."Profesor" ALTER COLUMN id SET DEFAULT nextval('public."Profesor_id_seq"'::regclass);
+
+
+--
+-- TOC entry 3209 (class 2604 OID 16851)
+-- Name: Profesor_Evento id; Type: DEFAULT; Schema: public; Owner: sheaven
+--
+
+ALTER TABLE ONLY public."Profesor_Evento" ALTER COLUMN id SET DEFAULT nextval('public."Profesor_Evento_id_seq"'::regclass);
+
+
+--
+-- TOC entry 3206 (class 2604 OID 16828)
+-- Name: Sucripcion id; Type: DEFAULT; Schema: public; Owner: sheaven
+--
+
+ALTER TABLE ONLY public."Sucripcion" ALTER COLUMN id SET DEFAULT nextval('public."Sucripcion_id_seq"'::regclass);
+
+
+--
+-- TOC entry 3203 (class 2604 OID 16801)
+-- Name: Usuario id; Type: DEFAULT; Schema: public; Owner: sheaven
+--
+
+ALTER TABLE ONLY public."Usuario" ALTER COLUMN id SET DEFAULT nextval('public."Usuario_id_seq"'::regclass);
+
+
+--
+-- TOC entry 3207 (class 2604 OID 16835)
+-- Name: UsuarioEvento id; Type: DEFAULT; Schema: public; Owner: sheaven
+--
+
+ALTER TABLE ONLY public."UsuarioEvento" ALTER COLUMN id SET DEFAULT nextval('public."UsuarioEvento_id_seq"'::regclass);
+
+
+--
+-- TOC entry 3384 (class 0 OID 16855)
+-- Dependencies: 225
+-- Data for Name: Clase; Type: TABLE DATA; Schema: public; Owner: sheaven
+--
+
+
+
+--
+-- TOC entry 3372 (class 0 OID 16807)
+-- Dependencies: 213
+-- Data for Name: Curso; Type: TABLE DATA; Schema: public; Owner: sheaven
+--
+
+INSERT INTO public."Curso" (id, nombre, deporte, descripcion, precio, id_profesor, calificacion, link, "createdAt", "updatedAt") VALUES (1, 'Tiros libres', 'Fútbol', 'En este curso aprenderás a sacar tiros libres como todo un profesional. Dictado por la campeona nacional Valeria Watanabe', 0, NULL, 0, 'https://drive.google.com/drive/folders/1Z3FyzinELPogrwT4Zpp72eaIGhB_r6XB', '2022-07-13 19:26:42.855-05', '2022-07-13 19:26:42.855-05');
+INSERT INTO public."Curso" (id, nombre, deporte, descripcion, precio, id_profesor, calificacion, link, "createdAt", "updatedAt") VALUES (2, 'Definición por penales', 'Fútbol', 'En este curso aprenderás a definir penales como todo un crack. Dictado por el balón de oro Gabriel Lozano Chávez', 0, NULL, 0, 'https://drive.google.com/drive/folders/15q9n5H8nbOk2oaTmMbLW3ow3KeVcMygI', '2022-07-13 19:27:28.722-05', '2022-07-13 19:27:28.722-05');
+INSERT INTO public."Curso" (id, nombre, deporte, descripcion, precio, id_profesor, calificacion, link, "createdAt", "updatedAt") VALUES (3, 'Resistencia', 'Fútbol', 'En este deporte podrás mejorar tu resistencia durante los partidos. Dictado por la futura promesa Mauricio Du Pont', 0, NULL, 3, 'https://drive.google.com/drive/folders/1qq-siSpR3ua_efs5jMhKITr9K6KikLpn', '2022-07-13 19:28:14.867-05', '2022-07-13 20:47:26.254-05');
+
+
+--
+-- TOC entry 3374 (class 0 OID 16816)
+-- Dependencies: 215
+-- Data for Name: Evento; Type: TABLE DATA; Schema: public; Owner: sheaven
+--
+
+INSERT INTO public."Evento" (id, nombre, ubicacion, fecha, hora, descripcion, id_usuario, "createdAt", "updatedAt") VALUES (1, 'Pichanga', 'Campo de Marte', '2022-07-15 19:00:00-05', '12:36', 'Gente, necesitamos 7 puntas más para una pichanga. Los que puedan, únanse al evento', NULL, '2022-07-13 19:31:44.417-05', '2022-07-13 19:31:44.417-05');
+INSERT INTO public."Evento" (id, nombre, ubicacion, fecha, hora, descripcion, id_usuario, "createdAt", "updatedAt") VALUES (2, 'Entrenamiento de porteros', 'Campo de marte', '2022-07-20 19:00:00-05', '22:05', 'Entrenamiento gratuito por niveles para porteros de todas las edades', NULL, '2022-07-13 19:32:39.102-05', '2022-07-13 19:32:39.102-05');
+INSERT INTO public."Evento" (id, nombre, ubicacion, fecha, hora, descripcion, id_usuario, "createdAt", "updatedAt") VALUES (3, 'a', 'a', '2022-07-05 19:00:00-05', '20:51', 'a', NULL, '2022-07-13 20:48:22.832-05', '2022-07-13 20:48:22.832-05');
+
+
+--
+-- TOC entry 3380 (class 0 OID 16839)
+-- Dependencies: 221
+-- Data for Name: Profesor; Type: TABLE DATA; Schema: public; Owner: sheaven
+--
+
+INSERT INTO public."Profesor" (id, rol, nombre, apellido, correo, password, fechan, calificacion, "createdAt", "updatedAt") VALUES (1, 'profe', 'Gabriel ', 'Lozano Chavez', 'gabrielozano@gmail.com', 'gabo', '2000-07-12 19:00:00-05', 0, '2022-07-13 19:18:07.564-05', '2022-07-13 19:18:07.564-05');
+INSERT INTO public."Profesor" (id, rol, nombre, apellido, correo, password, fechan, calificacion, "createdAt", "updatedAt") VALUES (2, 'profe', 'Mauricio', 'Du Pont Caballero', 'mauriciodupont@gmail.com', 'dupont', '2000-03-16 19:00:00-05', 0, '2022-07-13 19:19:05.82-05', '2022-07-13 19:19:05.82-05');
+INSERT INTO public."Profesor" (id, rol, nombre, apellido, correo, password, fechan, calificacion, "createdAt", "updatedAt") VALUES (3, 'profe', 'Valeria', 'Watanabe Yong', 'valewata@gmail.com', 'wata', '2001-02-07 19:00:00-05', 0, '2022-07-13 19:19:48.73-05', '2022-07-13 19:19:48.73-05');
+
+
+--
+-- TOC entry 3382 (class 0 OID 16848)
+-- Dependencies: 223
+-- Data for Name: Profesor_Evento; Type: TABLE DATA; Schema: public; Owner: sheaven
+--
+
+
+
+--
+-- TOC entry 3368 (class 0 OID 16792)
+-- Dependencies: 209
+-- Data for Name: SequelizeMeta; Type: TABLE DATA; Schema: public; Owner: sheaven
+--
+
+INSERT INTO public."SequelizeMeta" (name) VALUES ('20220606051748-create-usuario.js');
+INSERT INTO public."SequelizeMeta" (name) VALUES ('20220612202434-create-curso.js');
+INSERT INTO public."SequelizeMeta" (name) VALUES ('20220612202451-create-evento.js');
+INSERT INTO public."SequelizeMeta" (name) VALUES ('20220612202511-create-sucripcion.js');
+INSERT INTO public."SequelizeMeta" (name) VALUES ('20220612202605-create-usuario-evento.js');
+INSERT INTO public."SequelizeMeta" (name) VALUES ('20220703204346-create-profesor.js');
+INSERT INTO public."SequelizeMeta" (name) VALUES ('20220703204603-create-profesor-evento.js');
+INSERT INTO public."SequelizeMeta" (name) VALUES ('20220703204835-create-clase.js');
+
+
+--
+-- TOC entry 3376 (class 0 OID 16825)
+-- Dependencies: 217
+-- Data for Name: Sucripcion; Type: TABLE DATA; Schema: public; Owner: sheaven
+--
+
+
+
+--
+-- TOC entry 3370 (class 0 OID 16798)
+-- Dependencies: 211
+-- Data for Name: Usuario; Type: TABLE DATA; Schema: public; Owner: sheaven
+--
+
+INSERT INTO public."Usuario" (id, rol, nombre, apellido, correo, password, fechan, "createdAt", "updatedAt") VALUES (1, 'alumno', 'José', 'Castro Montenegro', 'chelocastro251100@gmail.com', 'chelo', '2000-11-24 19:00:00-05', '2022-07-13 19:20:25.992-05', '2022-07-13 19:20:25.992-05');
+INSERT INTO public."Usuario" (id, rol, nombre, apellido, correo, password, fechan, "createdAt", "updatedAt") VALUES (2, 'alumno', 'Samantha', 'Pérez Farfán', 'samperez@gmail.com', 'sam', '2001-04-04 19:00:00-05', '2022-07-13 19:21:06.121-05', '2022-07-13 19:21:06.121-05');
+INSERT INTO public."Usuario" (id, rol, nombre, apellido, correo, password, fechan, "createdAt", "updatedAt") VALUES (3, 'alumno', 'Joaquin', 'Rodriguez Seminario', 'joacorodriguez@gmail.com', 'joaco', '2001-06-10 19:00:00-05', '2022-07-13 19:21:49.304-05', '2022-07-13 19:21:49.304-05');
+INSERT INTO public."Usuario" (id, rol, nombre, apellido, correo, password, fechan, "createdAt", "updatedAt") VALUES (4, 'alumno', 'Gabriela', 'Dupont Castro', 'gab@gmail.com', 'gab', '2022-07-09 19:00:00-05', '2022-07-13 19:38:33.452-05', '2022-07-13 19:38:33.452-05');
+
+
+--
+-- TOC entry 3378 (class 0 OID 16832)
+-- Dependencies: 219
+-- Data for Name: UsuarioEvento; Type: TABLE DATA; Schema: public; Owner: sheaven
+--
+
+INSERT INTO public."UsuarioEvento" (id, id_usuario, id_evento, "createdAt", "updatedAt") VALUES (1, 1, 2, '2022-07-13 20:48:00.195-05', '2022-07-13 20:48:00.195-05');
+INSERT INTO public."UsuarioEvento" (id, id_usuario, id_evento, "createdAt", "updatedAt") VALUES (2, 1, 1, '2022-07-13 20:48:12.717-05', '2022-07-13 20:48:12.717-05');
+
+
+--
+-- TOC entry 3398 (class 0 OID 0)
+-- Dependencies: 224
+-- Name: Clase_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sheaven
+--
+
+SELECT pg_catalog.setval('public."Clase_id_seq"', 1, false);
+
+
+--
+-- TOC entry 3399 (class 0 OID 0)
+-- Dependencies: 212
+-- Name: Curso_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sheaven
+--
+
+SELECT pg_catalog.setval('public."Curso_id_seq"', 3, true);
+
+
+--
+-- TOC entry 3400 (class 0 OID 0)
+-- Dependencies: 214
+-- Name: Evento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sheaven
+--
+
+SELECT pg_catalog.setval('public."Evento_id_seq"', 3, true);
+
+
+--
+-- TOC entry 3401 (class 0 OID 0)
+-- Dependencies: 222
+-- Name: Profesor_Evento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sheaven
+--
+
+SELECT pg_catalog.setval('public."Profesor_Evento_id_seq"', 1, false);
+
+
+--
+-- TOC entry 3402 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: Profesor_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sheaven
+--
+
+SELECT pg_catalog.setval('public."Profesor_id_seq"', 3, true);
+
+
+--
+-- TOC entry 3403 (class 0 OID 0)
+-- Dependencies: 216
+-- Name: Sucripcion_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sheaven
+--
+
+SELECT pg_catalog.setval('public."Sucripcion_id_seq"', 1, false);
+
+
+--
+-- TOC entry 3404 (class 0 OID 0)
+-- Dependencies: 218
+-- Name: UsuarioEvento_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sheaven
+--
+
+SELECT pg_catalog.setval('public."UsuarioEvento_id_seq"', 2, true);
+
+
+--
+-- TOC entry 3405 (class 0 OID 0)
+-- Dependencies: 210
+-- Name: Usuario_id_seq; Type: SEQUENCE SET; Schema: public; Owner: sheaven
+--
+
+SELECT pg_catalog.setval('public."Usuario_id_seq"', 4, true);
+
+
+--
+-- TOC entry 3228 (class 2606 OID 16860)
+-- Name: Clase Clase_pkey; Type: CONSTRAINT; Schema: public; Owner: sheaven
+--
+
+ALTER TABLE ONLY public."Clase"
+    ADD CONSTRAINT "Clase_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3216 (class 2606 OID 16814)
+-- Name: Curso Curso_pkey; Type: CONSTRAINT; Schema: public; Owner: sheaven
+--
+
+ALTER TABLE ONLY public."Curso"
+    ADD CONSTRAINT "Curso_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3218 (class 2606 OID 16823)
+-- Name: Evento Evento_pkey; Type: CONSTRAINT; Schema: public; Owner: sheaven
+--
+
+ALTER TABLE ONLY public."Evento"
+    ADD CONSTRAINT "Evento_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3226 (class 2606 OID 16853)
+-- Name: Profesor_Evento Profesor_Evento_pkey; Type: CONSTRAINT; Schema: public; Owner: sheaven
+--
+
+ALTER TABLE ONLY public."Profesor_Evento"
+    ADD CONSTRAINT "Profesor_Evento_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3224 (class 2606 OID 16846)
+-- Name: Profesor Profesor_pkey; Type: CONSTRAINT; Schema: public; Owner: sheaven
+--
+
+ALTER TABLE ONLY public."Profesor"
+    ADD CONSTRAINT "Profesor_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3212 (class 2606 OID 16796)
+-- Name: SequelizeMeta SequelizeMeta_pkey; Type: CONSTRAINT; Schema: public; Owner: sheaven
+--
+
+ALTER TABLE ONLY public."SequelizeMeta"
+    ADD CONSTRAINT "SequelizeMeta_pkey" PRIMARY KEY (name);
+
+
+--
+-- TOC entry 3220 (class 2606 OID 16830)
+-- Name: Sucripcion Sucripcion_pkey; Type: CONSTRAINT; Schema: public; Owner: sheaven
+--
+
+ALTER TABLE ONLY public."Sucripcion"
+    ADD CONSTRAINT "Sucripcion_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3222 (class 2606 OID 16837)
+-- Name: UsuarioEvento UsuarioEvento_pkey; Type: CONSTRAINT; Schema: public; Owner: sheaven
+--
+
+ALTER TABLE ONLY public."UsuarioEvento"
+    ADD CONSTRAINT "UsuarioEvento_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 3214 (class 2606 OID 16805)
+-- Name: Usuario Usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: sheaven
+--
+
+ALTER TABLE ONLY public."Usuario"
+    ADD CONSTRAINT "Usuario_pkey" PRIMARY KEY (id);
+
+
+-- Completed on 2022-07-14 14:18:50
+
+--
+-- PostgreSQL database dump complete
+--
+
