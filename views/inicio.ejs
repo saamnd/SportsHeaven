@@ -11,7 +11,32 @@
     </head>
     <body class="">
         <%- include('header')  %>
-
+        <div class="container">
+            <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active" data-bs-interval="3500">
+                    <img src="/icons/futbol.jpg" class="d-block w-100" style="width: 100px; height: 300px" alt="...">
+                  </div>
+                  <div class="carousel-item" data-bs-interval="3000">
+                    <img src="/icons/basket.jpg" class="d-block w-100" style="width: 10px; height: 300px" alt="...">
+                  </div>
+                  <div class="carousel-item" data-bs-interval="3000">
+                    <img src="/icons/voley.jpg" class="d-block w-100" style="width: 100px; height: 300px" alt="...">
+                  </div>
+                  <div class="carousel-item">
+                    <img src="/icons/pingpong.jpg" class="d-block w-100" style="width: 100px; height: 300px" alt="...">
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+        </div>
         <%- include('footer') %>
     </body>
 </html>
